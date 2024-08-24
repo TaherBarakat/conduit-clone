@@ -20,14 +20,20 @@
           </ul>
         </div>
 
-        <app-article *ngFor="let article of articles" [article]="article" />
+        <app-articles-item
+          *ngFor="let article of articles"
+          [article]="article"
+        />
 
         <ul class="pagination">
           <li
-            *ngFor="let num of pagination; index as i"
+            *ngFor="let PageOffset of pagination; index as i"
             class="page-item active"
+            [ngClass]="{ active: PageOffset == offset }"
           >
-            <a class="page-link" href="">{{ i + 1 }}</a>
+            <a class="page-link" (click)="onSetOffset(PageOffset)">{{
+              i + 1
+            }}</a>
           </li>
         </ul>
       </div>

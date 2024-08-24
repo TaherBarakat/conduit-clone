@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 export type author = {
   username: string;
+  bio: string;
   image: string;
   following: boolean;
 };
@@ -13,11 +14,19 @@ export type article = {
   description: string;
   tagList: string[];
   createdAt: string;
+  updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
   author: author;
 };
 
+export type comment = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: author;
+};
 @Injectable({
   providedIn: 'root',
 })
@@ -46,7 +55,13 @@ export class ArticlesService {
   getAllArticles() {
     return this.articles.slice();
   }
+  getArticleBySlug(slug: string) {
+    let article: article = this.articles.filter(
+      (article) => article.slug === slug
+    )[0];
 
+    return article;
+  }
   setTags(tags: string[]) {
     this.tags = tags;
     this.tagsChanged.next(tags);

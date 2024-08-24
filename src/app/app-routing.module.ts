@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ArticleComponent } from './article/article.component';
+import { commentsResolver } from './article/comment/comments.resolver';
 
 const routes: Routes = [
   {
@@ -27,6 +29,13 @@ const routes: Routes = [
         path: 'signup',
       },
     ],
+  },
+  {
+    component: ArticleComponent,
+    path: 'article/:article-slug',
+    resolve: {
+      comments: commentsResolver,
+    },
   },
 ];
 

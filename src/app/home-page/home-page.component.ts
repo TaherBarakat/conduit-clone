@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ArticlesService } from './article/articles.service';
-import { article } from './article/articles.service';
+import { ArticlesService } from '../shared/articles.service';
+import { article } from '../shared/articles.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -19,6 +19,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   tagsSubscription = new Subscription();
 
   pagination = [];
+  offset: number = 0;
 
   constructor(
     private articlesSrv: ArticlesService,
@@ -39,9 +40,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.articlesCountSubscription =
       this.articlesSrv.articlesCountChanged.subscribe((data) => {
         this.articlesCount = data;
-        this.pagination.length = Math.ceil(this.articlesCount / 10);
-        console.log(this.pagination);
-        // console.log();
+
+        this.pagination = [];
+        for (
+          let offset = 0;
+          offset < Math.ceil(this.articlesCount / 20);
+          offset++
+        ) {
+          this.pagination.push(offset * 20);
+        }
       });
 
     this.dataStorageSrv.loadArticles();
@@ -52,5 +59,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.articleSubscription.unsubscribe();
     this.articlesCountSubscription.unsubscribe();
     this.tagsSubscription.unsubscribe();
+  }
+  onSetOffset(offset) {
+    this.offset = offset;
+    this.dataStorageSrv.loadArticles(offset);
   }
 }

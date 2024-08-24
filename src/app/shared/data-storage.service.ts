@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  article,
-  ArticlesService,
-} from '../home-page/article/articles.service';
+import { article, ArticlesService, comment } from './articles.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +11,14 @@ export class DataStorageService {
     private httpSrv: HttpClient,
     private articleSrv: ArticlesService
   ) {}
+  // offset = 0;
 
-  loadArticles() {
+  loadArticles(offset: number = 0) {
     this.httpSrv
       .get<{
         articles: article[];
         articlesCount: number;
-      }>('https://api.realworld.io/api/articles')
+      }>('https://api.realworld.io/api/articles', { params: { offset } })
       .subscribe((resData) => {
         console.log(resData.articlesCount);
         // ?limit=10&offset=0
@@ -34,5 +33,10 @@ export class DataStorageService {
       .subscribe((resData) => {
         this.articleSrv.setTags(resData.tags);
       });
+  }
+  loadComments(slug: string): Observable<{ comments: comment[] }> {
+    return this.httpSrv.get<{ comments: comment[] }>(
+      `https://api.realworld.io/api/articles/${slug}/comments`
+    );
   }
 }
