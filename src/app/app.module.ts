@@ -12,6 +12,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ArticleComponent } from './article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { ArticleComponent } from '../article/article.component';
 // import { CommentComponent } from '../article/comment/comment.component';
 // import { ArticleViewComponent } from './article-view/article-view.component';
@@ -30,7 +31,14 @@ import { CommentComponent } from './article/comment/comment.component';
     // CommentComponent,
     // ArticleViewComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, RouterModule],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
