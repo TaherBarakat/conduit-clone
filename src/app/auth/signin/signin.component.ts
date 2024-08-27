@@ -11,7 +11,7 @@ export class SigninComponent implements OnInit {
   constructor(private authSrv: AuthService) {}
 
   onSubmit(form: NgForm) {
-    this.authSrv.signup(form.value);
+    this.authSrv.signin(form.value);
   }
 
   ngOnInit() {

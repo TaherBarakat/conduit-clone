@@ -23,7 +23,9 @@ export class AuthService {
 
   signup(formData) {
     this.httpSrv
-      .post<signupResponse>('https://api.realworld.io/api/users', formData)
+      .post<signupResponse>('https://api.realworld.io/api/users', {
+        user: { ...formData },
+      })
       .pipe(map((resData) => resData.user))
       .subscribe((user) => {
         this.user = user;
@@ -32,10 +34,9 @@ export class AuthService {
   }
   signin(formData) {
     this.httpSrv
-      .post<signupResponse>(
-        'https://api.realworld.io/api/users/login',
-        formData
-      )
+      .post<signupResponse>('https://api.realworld.io/api/users/login', {
+        user: { ...formData },
+      })
       .pipe(map((resData) => resData.user))
       .subscribe((user) => {
         this.user = user;
@@ -44,14 +45,17 @@ export class AuthService {
   }
 
   getLoggedInUser() {
+    if (this.user) {
+      this.httpSrv
+        .get<signupResponse>('https://api.realworld.io/api/user', {
+          headers: { Authorization: `Bearer ${this.user.token}` },
+        })
+        .pipe(map((resData) => resData.user))
+        .subscribe((user) => {
+          this.user = user;
+          console.log(this.user);
+        });
+    }
     console.log('getLoggedInUser');
-
-    this.httpSrv
-      .get<signupResponse>('https://api.realworld.io/api/user')
-      .pipe(map((resData) => resData.user))
-      .subscribe((user) => {
-        this.user = user;
-        console.log(this.user);
-      });
   }
 }

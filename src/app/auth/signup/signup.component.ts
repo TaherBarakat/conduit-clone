@@ -11,6 +11,6 @@ export class SignupComponent {
   constructor(private authSrb: AuthService) {}
 
   onSubmit(form: NgForm) {
-    this.authSrb.signin(form.value);
+    this.authSrb.signup(form.value);
   }
 }
