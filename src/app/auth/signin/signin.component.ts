@@ -15,6 +15,6 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authSrv.getLoggedInUser();
+    // this.authSrv.getLoggedInUser();
   }
 }

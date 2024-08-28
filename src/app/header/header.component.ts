@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  authenticated: boolean = false;
+  authenticated: boolean = true;
 }

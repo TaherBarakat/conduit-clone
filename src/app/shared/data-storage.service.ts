@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { article, ArticlesService, comment } from './articles.service';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class DataStorageService {
       .get<{
         articles: article[];
         articlesCount: number;
-      }>('https://api.realworld.io/api/articles', { params: { offset } })
+      }>(`${environment.apiUrl}/articles`, { params: { offset } })
       .subscribe((resData) => {
         console.log(resData.articlesCount);
         // ?limit=10&offset=0
@@ -29,14 +30,15 @@ export class DataStorageService {
 
   loadTags() {
     this.httpSrv
-      .get<{ tags: string[] }>('https://api.realworld.io/api/tags')
+      .get<{ tags: string[] }>(`${environment.apiUrl}/tags`)
       .subscribe((resData) => {
         this.articleSrv.setTags(resData.tags);
       });
   }
+
   loadComments(slug: string): Observable<{ comments: comment[] }> {
     return this.httpSrv.get<{ comments: comment[] }>(
-      `https://api.realworld.io/api/articles/${slug}/comments`
+      `${environment.apiUrl}/articles/${slug}/comments`
     );
   }
 }
