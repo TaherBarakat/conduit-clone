@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LocalizedString } from '@angular/compiler';
-type user = {
+export type user = {
   email: string;
   token: string;
   username: string;
@@ -62,8 +62,6 @@ export class AuthService {
         .pipe(map((resData) => resData.user))
         .subscribe((user) => {
           this.setUser(user);
-          // this.user = user;
-          // console.log(this.user);
         });
     }
     console.log('getLoggedInUser');
