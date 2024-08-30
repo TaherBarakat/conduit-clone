@@ -13,12 +13,20 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="auth/signin"
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          routerLink="auth/signin"
+          [routerLinkActiveOptions]="{ exact: true }"
           >Sign in</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="auth/signup"
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          routerLink="auth/signup"
+          [routerLinkActiveOptions]="{ exact: true }"
           >Sign up</a
         >
       </li>
@@ -28,24 +36,40 @@
 
 <nav *ngIf="authenticated" class="navbar navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="/">conduit</a>
+    <a class="navbar-brand" routerLink="/home">conduit</a>
     <ul class="nav navbar-nav pull-xs-right">
       <li class="nav-item">
         <!-- Add "active" class when you're on that page" -->
-        <a class="nav-link active" href="/">Home</a>
+        <a
+          class="nav-link active"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/home"
+          >Home</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/editor">
+        <a
+          class="nav-link"
+          [routerLinkActive]="'active'"
+          routerLink="/editor"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="ion-compose"></i>&nbsp;New Article
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/settings">
+        <a
+          class="nav-link"
+          [routerLinkActive]="'active'"
+          routerLink="/settings"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="ion-gear-a"></i>&nbsp;Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/profile/eric-simons">
+        <a class="nav-link" [routerLink]="['/profile', user.username]">
           <img [src]="user.image" class="user-pic" />
           {{ user.username }}
         </a>

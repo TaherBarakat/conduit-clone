@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { ArticlesItemComponent } from './home-page/articles-item/articles-item.component';
+// import { ArticlesItemComponent } from './home-page/articles-item/articles-item.component';
+// import { ArticleComponent } from './article/article.component';
+// IMPORT ArticlesItemComponent
 import {
   HttpClientModule,
   provideHttpClient,
@@ -18,6 +20,10 @@ import { ArticleComponent } from './article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/auth.interceptor';
+import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
+import { FavoritesComponent } from './profile/favorites/favorites.component';
+import { ArticlesItemComponent } from './shared/articles-item/articles-item.component';
 // import { ArticleComponent } from '../article/article.component';
 // import { CommentComponent } from '../article/comment/comment.component';
 // import { ArticleViewComponent } from './article-view/article-view.component';
@@ -33,6 +39,9 @@ import { authInterceptor } from './auth/auth.interceptor';
     ArticleComponent,
     // ArticleComponent,
     CommentComponent,
+    ProfileComponent,
+    SettingsComponent,
+    FavoritesComponent,
     // CommentComponent,
     // ArticleViewComponent,
   ],

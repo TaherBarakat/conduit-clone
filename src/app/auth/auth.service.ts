@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LocalizedString } from '@angular/compiler';
+import { Router } from '@angular/router';
 export type user = {
   email: string;
   token: string;
@@ -22,11 +23,17 @@ const TOKEN_KEY = 'conduit';
 export class AuthService {
   user = new BehaviorSubject(null);
 
-  constructor(private httpSrv: HttpClient) {}
+  constructor(private httpSrv: HttpClient, private router: Router) {}
 
   setUser(user: user) {
     this.user.next(user);
     localStorage.setItem(TOKEN_KEY, user.token);
+    this.router.navigate(['/home']);
+  }
+  logout() {
+    localStorage.removeItem(TOKEN_KEY);
+    this.user.next(null);
+    this.router.navigate(['/home']);
   }
 
   getToken() {
@@ -57,9 +64,6 @@ export class AuthService {
   }
 
   getLoggedInUser() {
-    console.log('get');
-    console.log(this.getToken());
-
     if (this.getToken()) {
       this.httpSrv
         .get<signupResponse>(`${environment.apiUrl}/user`)

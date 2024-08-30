@@ -6,6 +6,8 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ArticleComponent } from './article/article.component';
 import { commentsResolver } from './article/comment/comments.resolver';
+import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,20 @@ const routes: Routes = [
     resolve: {
       comments: commentsResolver,
     },
+  },
+  {
+    component: SettingsComponent,
+    path: 'settings',
+  },
+  {
+    component: ProfileComponent,
+    path: 'profile/:username',
+    // children: [
+    //   {
+    //     path: '/favorites',
+    //     component:,
+    //   },
+    // ],
   },
 ];
 
