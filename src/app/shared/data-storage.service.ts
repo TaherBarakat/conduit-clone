@@ -21,7 +21,7 @@ export class DataStorageService {
         articlesCount: number;
       }>(`${environment.apiUrl}/articles`, { params: { offset } })
       .subscribe((resData) => {
-        console.log(resData.articlesCount);
+        // console.log(resData.articlesCount);
         // ?limit=10&offset=0
         this.articleSrv.setArticlesCount(resData.articlesCount);
         this.articleSrv.setArticles(resData.articles);

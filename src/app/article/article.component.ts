@@ -26,7 +26,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.article = this.articleSrv.getArticleBySlug(articleSlug);
 
     this.commentsSub = this.actRoute.data.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.comments = data.comments;
     });
   }

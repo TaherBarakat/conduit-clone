@@ -9,6 +9,6 @@ import { article } from '../../shared/articles.service';
 export class ArticlesItemComponent {
   @Input('article') article: article;
   d() {
-    console.log('ffff');
+    // console.log('ffff');
   }
 }

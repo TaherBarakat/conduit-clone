@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LocalizedString } from '@angular/compiler';
 export type user = {
@@ -20,16 +20,17 @@ const TOKEN_KEY = 'conduit';
   providedIn: 'root',
 })
 export class AuthService {
-  user: user;
+  user = new BehaviorSubject(null);
 
   constructor(private httpSrv: HttpClient) {}
 
   setUser(user: user) {
-    this.user = { ...user };
+    this.user.next(user);
     localStorage.setItem(TOKEN_KEY, user.token);
   }
 
   getToken() {
+    // console.log('getToken');
     return localStorage.getItem(TOKEN_KEY);
   }
 
@@ -56,14 +57,24 @@ export class AuthService {
   }
 
   getLoggedInUser() {
-    if (this.user) {
+    console.log('get');
+    console.log(this.getToken());
+
+    if (this.getToken()) {
       this.httpSrv
         .get<signupResponse>(`${environment.apiUrl}/user`)
-        .pipe(map((resData) => resData.user))
+        .pipe(
+          map((resData) => resData.user),
+          catchError((message) => {
+            localStorage.removeItem(TOKEN_KEY);
+            return throwError(console.log(message));
+          })
+        )
         .subscribe((user) => {
+          // console.log(user);
+          // console.log('test test');
           this.setUser(user);
         });
     }
-    console.log('getLoggedInUser');
   }
 }

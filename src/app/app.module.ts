@@ -5,7 +5,11 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ArticlesItemComponent } from './home-page/articles-item/articles-item.component';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { SigninComponent } from './auth/signin/signin.component';
@@ -13,6 +17,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ArticleComponent } from './article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { authInterceptor } from './auth/auth.interceptor';
 // import { ArticleComponent } from '../article/article.component';
 // import { CommentComponent } from '../article/comment/comment.component';
 // import { ArticleViewComponent } from './article-view/article-view.component';
@@ -39,7 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
