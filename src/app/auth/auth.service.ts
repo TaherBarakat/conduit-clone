@@ -79,6 +79,6 @@ export class AuthService {
           // console.log('test test');
           this.setUser(user);
         });
-    }
+    } else this.user.next(null);
   }
 }

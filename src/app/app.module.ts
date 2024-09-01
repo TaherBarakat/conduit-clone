@@ -24,6 +24,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FavoritesComponent } from './profile/favorites/favorites.component';
 import { ArticlesItemComponent } from './shared/articles-item/articles-item.component';
+import { EditorPageComponent } from './editor-page/editor-page.component';
 // import { ArticleComponent } from '../article/article.component';
 // import { CommentComponent } from '../article/comment/comment.component';
 // import { ArticleViewComponent } from './article-view/article-view.component';
@@ -42,6 +43,7 @@ import { ArticlesItemComponent } from './shared/articles-item/articles-item.comp
     ProfileComponent,
     SettingsComponent,
     FavoritesComponent,
+    EditorPageComponent,
     // CommentComponent,
     // ArticleViewComponent,
   ],

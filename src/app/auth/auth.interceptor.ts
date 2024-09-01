@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authSrv = inject(AuthService);
   const token = authSrv.getToken();
-  const apiUrlsRequiringAuth = ['/user'];
+  const apiUrlsRequiringAuth = ['/user', '/articles/feed'];
   if (
     token &&
     authSrv.user &&

@@ -1,8 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ArticlesService } from '../shared/articles.service';
 import { article } from '../shared/articles.service';
-import { DataStorageService } from '../shared/data-storage.service';
+import {
+  ArticleParams,
+  DataStorageService,
+} from '../shared/data-storage.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -23,10 +27,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private articlesSrv: ArticlesService,
-    private dataStorageSrv: DataStorageService
+    private dataStorageSrv: DataStorageService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.offset = 0;
+
     this.articleSubscription = this.articlesSrv.articlesChanged.subscribe(
       (data) => {
         this.articles = data;
@@ -51,7 +58,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.dataStorageSrv.loadArticles();
+    this.route.queryParams.subscribe((params) => {
+      // console.log(params['my-feed']);
+      let articleParams = new ArticleParams({
+        myFeed: params['my-feed'] ? true : false,
+      });
+      // console.log(articleParams.getParams());
+      this.dataStorageSrv.loadArticles(articleParams);
+    });
     this.dataStorageSrv.loadTags();
   }
 
@@ -62,6 +76,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
   onSetOffset(offset) {
     this.offset = offset;
-    this.dataStorageSrv.loadArticles(offset);
+    let params = new ArticleParams({ offset: this.offset });
+    this.dataStorageSrv.loadArticles(params);
   }
 }

@@ -8,6 +8,7 @@ import { ArticleComponent } from './article/article.component';
 import { commentsResolver } from './article/comment/comments.resolver';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EditorPageComponent } from './editor-page/editor-page.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
     //     component:,
     //   },
     // ],
+  },
+  {
+    component: EditorPageComponent,
+    path: 'editor',
   },
 ];
 
