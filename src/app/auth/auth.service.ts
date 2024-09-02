@@ -26,10 +26,11 @@ export class AuthService {
   constructor(private httpSrv: HttpClient, private router: Router) {}
 
   setUser(user: user) {
-    this.user.next(user);
     localStorage.setItem(TOKEN_KEY, user.token);
+    this.user.next(user);
     this.router.navigate(['/home']);
   }
+
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     this.user.next(null);

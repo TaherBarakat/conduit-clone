@@ -32,8 +32,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.offset = 0;
-
     this.articleSubscription = this.articlesSrv.articlesChanged.subscribe(
       (data) => {
         this.articles = data;
@@ -59,11 +57,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
 
     this.route.queryParams.subscribe((params) => {
-      // console.log(params['my-feed']);
       let articleParams = new ArticleParams({
         myFeed: params['my-feed'] ? true : false,
       });
-      // console.log(articleParams.getParams());
       this.dataStorageSrv.loadArticles(articleParams);
     });
     this.dataStorageSrv.loadTags();
