@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-xs-12 col-md-10 offset-md-1">
         <div class="articles-toggle">
@@ -98,6 +98,64 @@
           </li>
         </ul>
       </div>
+    </div>
+  </div> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="feed-toggle">
+          <ul class="nav nav-pills outline-active">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="['/profile', userName]"
+                [queryParams]="{ favorited: true }"
+                >Favorited Articles</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="['/profile', userName]"
+                >My Articles</a
+              >
+            </li>
+          </ul>
+        </div>
+        <h4 *ngIf="articles.length === 0">No Available Articles!</h4>
+        <app-articles-item
+          *ngFor="let article of articles"
+          [article]="article"
+        />
+
+        <ul class="pagination">
+          <li
+            *ngFor="let PageOffset of pagination; index as i"
+            class="page-item active"
+            [ngClass]="{ active: PageOffset == offset }"
+          >
+            <a class="page-link" (click)="onSetOffset(PageOffset)">{{
+              i + 1
+            }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div class="col-md-3">
+        <div class="sidebar">
+          <p>Popular Tags</p>
+
+          <div class="tag-list">
+            <a *ngFor="let tag of tags" href="" class="tag-pill tag-default">{{
+              tag
+            }}</a>
+          </div>
+        </div>
+      </div> -->
     </div>
   </div>
 </div>

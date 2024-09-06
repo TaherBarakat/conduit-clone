@@ -5,20 +5,28 @@ import { AuthService } from './auth.service';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authSrv = inject(AuthService);
   const token = authSrv.getToken();
-  const apiUrlsRequiringAuth = ['/user', '/articles/feed'];
+  const apiUrlsRequiringAuth = [
+    { method: 'GET', path: '/user' },
+    { method: 'GET', path: '/articles/feed' },
+    { method: 'POST', path: '/articles' },
+  ];
   if (
     token &&
     authSrv.user &&
-    apiUrlsRequiringAuth.some((url) => req.url.endsWith(url))
+    apiUrlsRequiringAuth.some((url) => req.url.endsWith(url.path))
   ) {
-    const cloned = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    for (const api of apiUrlsRequiringAuth) {
+      if (req.url.endsWith(api.path) && req.method === api.method) {
+        console.log(req.url, req.method, 'need auth');
 
-    // console.log('NEEd Auth');
-    return next(cloned);
+        const cloned = req.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return next(cloned);
+      }
+    }
   }
 
   return next(req);

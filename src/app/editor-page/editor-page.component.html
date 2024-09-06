@@ -6,10 +6,11 @@
           <li>That title is required</li>
         </ul>
 
-        <form>
+        <form [formGroup]="articleForm">
           <fieldset>
             <fieldset class="form-group">
               <input
+                formControlName="title"
                 type="text"
                 class="form-control form-control-lg"
                 placeholder="Article Title"
@@ -17,6 +18,7 @@
             </fieldset>
             <fieldset class="form-group">
               <input
+                formControlName="description"
                 type="text"
                 class="form-control"
                 placeholder="What's this article about?"
@@ -24,6 +26,7 @@
             </fieldset>
             <fieldset class="form-group">
               <textarea
+                formControlName="body"
                 class="form-control"
                 rows="8"
                 placeholder="Write your article (in markdown)"
@@ -41,7 +44,11 @@
                 </span>
               </div>
             </fieldset>
-            <button class="btn btn-lg pull-xs-right btn-primary" type="button">
+            <button
+              (click)="onSubmit()"
+              class="btn btn-lg pull-xs-right btn-primary"
+              type="button"
+            >
               Publish Article
             </button>
           </fieldset>

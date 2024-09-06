@@ -54,9 +54,16 @@ const routes: Routes = [
     //   },
     // ],
   },
+
   {
     component: EditorPageComponent,
     path: 'editor',
+    children: [
+      {
+        path: ':article-slug',
+        component: EditorPageComponent,
+      },
+    ],
   },
 ];
 
