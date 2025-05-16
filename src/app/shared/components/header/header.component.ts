@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, user } from '../auth/auth.service';
+import { AuthService, user } from '../../../auth/auth.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-header',

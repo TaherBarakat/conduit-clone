@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { ArticleComponent } from './article/article.component';
-import { commentsResolver } from './article/comment/comments.resolver';
+import { ArticlePageComponent } from './article/components/article-page/article-page.component';
+import { commentsResolver } from './comment/components/comment/comments.resolver';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
-import { EditorPageComponent } from './editor-page/editor-page.component';
+import { ArticleFormComponent } from './article/components/article-form/article-form.component';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     ],
   },
   {
-    component: ArticleComponent,
+    component: ArticlePageComponent,
     path: 'article/:article-slug',
     resolve: {
       comments: commentsResolver,
@@ -47,29 +47,17 @@ const routes: Routes = [
   {
     component: ProfileComponent,
     path: 'profile/:username',
-    // children: [
-    //   {
-    //     path: '/favorites',
-    //     component:,
-    //   },
-    // ],
   },
 
   {
-    component: EditorPageComponent,
-    path: 'editor',
-    children: [
-      {
-        path: ':article-slug',
-        component: EditorPageComponent,
-      },
-    ],
+    component: ArticleFormComponent,
+    path: 'editor/:article-slug',
   },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(routes)],
+  imports: [CommonModule, RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

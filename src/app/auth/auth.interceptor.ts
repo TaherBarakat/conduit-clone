@@ -9,6 +9,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     { method: 'GET', path: '/user' },
     { method: 'GET', path: '/articles/feed' },
     { method: 'POST', path: '/articles' },
+    // { method: '', path: '/articles' },
   ];
   if (
     token &&

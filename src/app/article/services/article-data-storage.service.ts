@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { article, ArticlesService, comment } from './articles.service';
+import { ArticleService } from './article.service';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environments';
+import { environment } from '../../../environments/environments';
+import { article } from '../models/article.model';
+// import { environment } from '../../environments/environments';
 
 export class ArticleParams {
+  1;
   myFeed?: boolean;
   tag?: string;
   author?: string;
@@ -52,10 +55,10 @@ export class ArticleParams {
 @Injectable({
   providedIn: 'root',
 })
-export class DataStorageService {
+export class ArticleDataStorageService {
   constructor(
     private httpSrv: HttpClient,
-    private articleSrv: ArticlesService
+    private articleSrv: ArticleService
   ) {}
   // offset = 0;
 
@@ -72,19 +75,5 @@ export class DataStorageService {
         this.articleSrv.setArticlesCount(resData.articlesCount);
         this.articleSrv.setArticles(resData.articles);
       });
-  }
-
-  loadTags() {
-    this.httpSrv
-      .get<{ tags: string[] }>(`${environment.apiUrl}/tags`)
-      .subscribe((resData) => {
-        this.articleSrv.setTags(resData.tags);
-      });
-  }
-
-  loadComments(slug: string): Observable<{ comments: comment[] }> {
-    return this.httpSrv.get<{ comments: comment[] }>(
-      `${environment.apiUrl}/articles/${slug}/comments`
-    );
   }
 }

@@ -1,22 +1,29 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { article, ArticlesService, comment } from '../shared/articles.service';
+// import { article, ArticlesService, comment } from '../shared/articles.service';
 import { ActivatedRoute, Route } from '@angular/router';
-import { DataStorageService } from '../shared/data-storage.service';
+// import { DataStorageService } from '../shared/data-storage.service';
 import { map, Observable, Subscription } from 'rxjs';
+import {
+  // article,
+  ArticleService,
+  // comment,
+} from '../../services/article.service';
+import { article } from '../../models/article.model';
+import { comment } from '../../../comment/services/comment-data-storage.service';
 
 @Component({
   selector: 'app-article',
-  templateUrl: './article.component.html',
-  styleUrl: './article.component.css',
+  templateUrl: './article-page.component.html',
+  styleUrl: './article-page.component.css',
 })
-export class ArticleComponent implements OnInit, OnDestroy {
+export class ArticlePageComponent implements OnInit, OnDestroy {
   article: article;
   comments: comment[] = [];
 
   commentsSub: Subscription;
 
   constructor(
-    private articleSrv: ArticlesService,
+    private articleSrv: ArticleService,
     private actRoute: ActivatedRoute
   ) {}
 

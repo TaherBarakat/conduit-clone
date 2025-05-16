@@ -16,7 +16,7 @@ type signupResponse = {
   user: user;
 };
 
-const TOKEN_KEY = 'conduit';
+const TOKEN_KEY = 'CONDUIT';
 @Injectable({
   providedIn: 'root',
 })
@@ -76,8 +76,6 @@ export class AuthService {
           })
         )
         .subscribe((user) => {
-          // console.log(user);
-          // console.log('test test');
           this.setUser(user);
         });
     } else this.user.next(null);

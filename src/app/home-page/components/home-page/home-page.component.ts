@@ -1,49 +1,46 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ArticlesService } from '../shared/articles.service';
-import { article } from '../shared/articles.service';
-import {
-  ArticleParams,
-  DataStorageService,
-} from '../shared/data-storage.service';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ArticleService } from '../../../article/services/article.service';
+// import {
+//   ArticleParams,
+//   DataStorageService} from ''
+import { Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import {
+  ArticleDataStorageService,
+  ArticleParams,
+} from '../../../article/services/article-data-storage.service';
+import { HomePageService } from '../../services/home-page.service';
+import { article } from '../../../article/models/article.model';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  articles: article[] = this.articlesSrv.articles;
+  private _articlesSrv = inject(ArticleService);
+  private _homePageSrv = inject(HomePageService);
+  private _dataStorageSrv = inject(ArticleDataStorageService);
+  private route = inject(ActivatedRoute);
+
+  articles: article[] = this._articlesSrv.articles;
   articleSubscription = new Subscription();
 
   articlesCount: number;
   articlesCountSubscription = new Subscription();
 
-  tags: string[];
-  tagsSubscription = new Subscription();
-
   pagination = [];
   offset: number = 0;
 
-  constructor(
-    private articlesSrv: ArticlesService,
-    private dataStorageSrv: DataStorageService,
-    private route: ActivatedRoute
-  ) {}
-
   ngOnInit(): void {
-    this.articleSubscription = this.articlesSrv.articlesChanged.subscribe(
+    this.articleSubscription = this._articlesSrv.articlesChanged.subscribe(
       (data) => {
         this.articles = data;
       }
     );
 
-    this.tagsSubscription = this.articlesSrv.tagsChanged.subscribe((data) => {
-      this.tags = data;
-    });
-
     this.articlesCountSubscription =
-      this.articlesSrv.articlesCountChanged.subscribe((data) => {
+      this._articlesSrv.articlesCountChanged.subscribe((data) => {
         this.articlesCount = data;
 
         this.pagination = [];
@@ -60,19 +57,17 @@ export class HomePageComponent implements OnInit, OnDestroy {
       let articleParams = new ArticleParams({
         myFeed: params['my-feed'] ? true : false,
       });
-      this.dataStorageSrv.loadArticles(articleParams);
+      this._dataStorageSrv.loadArticles(articleParams);
     });
-    this.dataStorageSrv.loadTags();
   }
 
   ngOnDestroy() {
     this.articleSubscription.unsubscribe();
     this.articlesCountSubscription.unsubscribe();
-    this.tagsSubscription.unsubscribe();
   }
   onSetOffset(offset) {
     this.offset = offset;
     let params = new ArticleParams({ offset: this.offset });
-    this.dataStorageSrv.loadArticles(params);
+    this._dataStorageSrv.loadArticles(params);
   }
 }

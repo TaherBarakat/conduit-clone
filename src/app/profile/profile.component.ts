@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { article, ArticlesService } from '../shared/articles.service';
+import { ArticleService } from '../article/services/article.service';
+// import {
+// ArticleData
 import {
+  ArticleDataStorageService,
   ArticleParams,
-  DataStorageService,
-} from '../shared/data-storage.service';
+} from '../article/services/article-data-storage.service';
 import { Subscription } from 'rxjs';
+import { article } from '../article/models/article.model';
 
 @Component({
   selector: 'app-profile',
@@ -24,8 +27,8 @@ export class ProfileComponent implements OnInit {
   offset: number = 0;
 
   constructor(
-    private articlesSrv: ArticlesService,
-    private dataStorageSrv: DataStorageService,
+    private articlesSrv: ArticleService,
+    private dataStorageSrv: ArticleDataStorageService,
     private route: ActivatedRoute
   ) {}
 

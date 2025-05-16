@@ -8,15 +8,15 @@ import {
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { article } from '../shared/articles.service';
-import { environment } from '../../environments/environments';
+import { environment } from '../../../../environments/environments';
+import { article } from '../../models/article.model';
 
 @Component({
   selector: 'app-editor-page',
-  templateUrl: './editor-page.component.html',
-  styleUrl: './editor-page.component.css',
+  templateUrl: './article-form.component.html',
+  styleUrl: './article-form.component.css',
 })
-export class EditorPageComponent implements OnInit {
+export class ArticleFormComponent implements OnInit {
   editMode: boolean = false;
   articleForm: FormGroup;
 

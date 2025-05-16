@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 // import { ArticlesItemComponent } from './home-page/articles-item/articles-item.component';
 // import { ArticleComponent } from './article/article.component';
 // IMPORT ArticlesItemComponent
@@ -13,37 +13,38 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { RouterModule } from '@angular/router';
+import { RouterModule, withHashLocation } from '@angular/router';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { ArticleComponent } from './article/article.component';
-import { CommentComponent } from './article/comment/comment.component';
+// import { ArticleComponent } from './article/article.component';
+import { ArticlePageComponent } from './article/components/article-page/article-page.component';
+
+import { CommentComponent } from './comment/components/comment/comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/auth.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FavoritesComponent } from './profile/favorites/favorites.component';
-import { ArticlesItemComponent } from './shared/articles-item/articles-item.component';
-import { EditorPageComponent } from './editor-page/editor-page.component';
-// import { ArticleComponent } from '../article/article.component';
-// import { CommentComponent } from '../article/comment/comment.component';
-// import { ArticleViewComponent } from './article-view/article-view.component';
+import { ArticlesListItemComponent } from './article/components/articles-list-item/articles-list-item.component';
+import { ArticleFormComponent } from './article/components/article-form/article-form.component';
+import { TagsListComponent } from './home-page/components/tags-list/tags-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomePageComponent,
-    ArticlesItemComponent,
+    ArticlesListItemComponent,
     SigninComponent,
     SignupComponent,
-    ArticleComponent,
+    ArticlePageComponent,
     // ArticleComponent,
     CommentComponent,
     ProfileComponent,
     SettingsComponent,
     FavoritesComponent,
-    EditorPageComponent,
+    ArticleFormComponent,
+    TagsListComponent,
     // CommentComponent,
     // ArticleViewComponent,
   ],
