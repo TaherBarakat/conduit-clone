@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LocalizedString } from '@angular/compiler';
 import { Router } from '@angular/router';
@@ -12,8 +12,17 @@ export type user = {
   image: string;
 };
 
-type signupResponse = {
+export type signupResponse = {
   user: user;
+};
+export type setUserForm = {
+  user: {
+    email: string;
+    password: string;
+    username: string;
+    bio: string;
+    image: string;
+  };
 };
 
 const TOKEN_KEY = 'CONDUIT';
@@ -21,29 +30,28 @@ const TOKEN_KEY = 'CONDUIT';
   providedIn: 'root',
 })
 export class AuthService {
-  user = new BehaviorSubject(null);
-
-  constructor(private httpSrv: HttpClient, private router: Router) {}
+  user$ = new BehaviorSubject<user>(null);
+  private _httpSrv = inject(HttpClient);
+  private _router = inject(Router);
 
   setUser(user: user) {
     localStorage.setItem(TOKEN_KEY, user.token);
-    this.user.next(user);
-    this.router.navigate(['/home']);
+    this.user$.next(user);
+    this._router.navigate(['/home']);
   }
 
   logout() {
     localStorage.removeItem(TOKEN_KEY);
-    this.user.next(null);
-    this.router.navigate(['/home']);
+    this.user$.next(null);
+    this._router.navigate(['/home']);
   }
 
   getToken() {
-    // console.log('getToken');
     return localStorage.getItem(TOKEN_KEY);
   }
 
   signup(formData) {
-    this.httpSrv
+    this._httpSrv
       .post<signupResponse>(`${environment.apiUrl}/users`, {
         user: { ...formData },
       })
@@ -54,7 +62,7 @@ export class AuthService {
   }
 
   signin(formData) {
-    this.httpSrv
+    this._httpSrv
       .post<signupResponse>(`${environment.apiUrl}/users/login`, {
         user: { ...formData },
       })
@@ -66,9 +74,11 @@ export class AuthService {
 
   getLoggedInUser() {
     if (this.getToken()) {
-      this.httpSrv
+      console.log(this.getToken(), 'token');
+      this._httpSrv
         .get<signupResponse>(`${environment.apiUrl}/user`)
         .pipe(
+          tap((res) => console.log(res, 'resssssssssssssssss')),
           map((resData) => resData.user),
           catchError((message) => {
             localStorage.removeItem(TOKEN_KEY);
@@ -78,6 +88,12 @@ export class AuthService {
         .subscribe((user) => {
           this.setUser(user);
         });
-    } else this.user.next(null);
+    } else this.user$.next(null);
+  }
+  updateUserInfo(userInfo: setUserForm) {
+    return this._httpSrv.put<signupResponse>(
+      `${environment.apiUrl}/user`,
+      userInfo
+    );
   }
 }

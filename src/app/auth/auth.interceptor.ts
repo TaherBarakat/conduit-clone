@@ -7,15 +7,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authSrv.getToken();
   const apiUrlsRequiringAuth = [
     { method: 'GET', path: '/user' },
+    { method: 'PUT', path: '/user' },
     { method: 'GET', path: '/articles/feed' },
     { method: 'POST', path: '/articles' },
     // { method: '', path: '/articles' },
   ];
-  if (
-    token &&
-    authSrv.user &&
-    apiUrlsRequiringAuth.some((url) => req.url.endsWith(url.path))
-  ) {
+  if (token && apiUrlsRequiringAuth.some((url) => req.url.endsWith(url.path))) {
     for (const api of apiUrlsRequiringAuth) {
       if (req.url.endsWith(api.path) && req.method === api.method) {
         console.log(req.url, req.method, 'need auth');

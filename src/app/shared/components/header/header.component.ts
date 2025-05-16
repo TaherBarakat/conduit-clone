@@ -13,17 +13,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authSrv: AuthService) {}
   ngOnInit(): void {
-    // let token=this.authSrv.getToken()
-    this.userSub = this.authSrv.user.subscribe((user) => {
-      console.log('sub');
-      console.log(user);
+    this.authSrv.getLoggedInUser();
+
+    this.userSub = this.authSrv.user$.subscribe((user) => {
       this.user = user;
       this.user ? (this.authenticated = true) : (this.authenticated = false);
     });
-
-    this.authSrv.getLoggedInUser();
-    // this.user ? this.authenticated === true : this.authenticated === false;
-    // console.log(this.user, 'ddd');
-    // console.log(this.authenticated);
   }
 }

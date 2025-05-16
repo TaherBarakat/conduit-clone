@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { article } from '../../models/article.model';
 // import { article } from '../../services/article.service';
 
@@ -7,9 +7,10 @@ import { article } from '../../models/article.model';
   templateUrl: './articles-list-item.component.html',
   styleUrl: './articles-list-item.component.css',
 })
-export class ArticlesListItemComponent {
+export class ArticlesListItemComponent implements OnInit {
   @Input('article') article: article;
-  d() {
-    // console.log('ffff');
+
+  ngOnInit() {
+    // console.log(this.article);
   }
 }

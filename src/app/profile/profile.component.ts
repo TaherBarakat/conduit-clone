@@ -16,8 +16,9 @@ import { article } from '../article/models/article.model';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
+  isMyProfile = this;
   userName: string;
-  articles: article[] = this.articlesSrv.articles;
+  articles: article[] = this._articlesSrv.articles;
   articleSubscription = new Subscription();
 
   articlesCount: number;
@@ -27,20 +28,20 @@ export class ProfileComponent implements OnInit {
   offset: number = 0;
 
   constructor(
-    private articlesSrv: ArticleService,
-    private dataStorageSrv: ArticleDataStorageService,
+    private _articlesSrv: ArticleService,
+    private _dataStorageSrv: ArticleDataStorageService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.articleSubscription = this.articlesSrv.articlesChanged.subscribe(
+    this.articleSubscription = this._articlesSrv.articlesChanged.subscribe(
       (data) => {
         this.articles = data;
       }
     );
 
     this.articlesCountSubscription =
-      this.articlesSrv.articlesCountChanged.subscribe((data) => {
+      this._articlesSrv.articlesCountChanged.subscribe((data) => {
         this.articlesCount = data;
 
         this.pagination = [];
@@ -63,7 +64,7 @@ export class ProfileComponent implements OnInit {
         author: this.userName,
         favorited: params['favorited'] ? true : false,
       });
-      this.dataStorageSrv.loadArticles(articleParams);
+      this._dataStorageSrv.loadArticles(articleParams);
     });
   }
 
@@ -75,6 +76,6 @@ export class ProfileComponent implements OnInit {
   onSetOffset(offset) {
     this.offset = offset;
     let params = new ArticleParams({ offset: this.offset });
-    this.dataStorageSrv.loadArticles(params);
+    this._dataStorageSrv.loadArticles(params);
   }
 }
