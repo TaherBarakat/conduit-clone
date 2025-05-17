@@ -7,7 +7,7 @@ import {
   ArticleDataStorageService,
   ArticleParams,
 } from '../../../article/services/article-data-storage.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { article } from '../../../article/models/article.model';
 import { AuthService, user } from '../../../auth/auth.service';
 import { CurrencyPipe } from '@angular/common';
@@ -55,7 +55,17 @@ export class ProfileComponent implements OnInit {
     // this.articleSubscription.unsubscribe();
     // this.articlesCountSubscription.unsubscribe();
   }
-
+  onFollow() {
+    this._profileSrv
+      .followProfile(
+        this.profile.profileDetails.username,
+        this.profile.profileDetails.following
+      )
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.profile = result;
+      });
+  }
   onSetOffset(offset) {
     this.offset = offset;
     let params = new ArticleParams({ offset: this.offset });

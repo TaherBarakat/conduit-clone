@@ -40,7 +40,27 @@ export class ProfileService {
           take(1),
           map((currentUser) => ({
             profileDetails: profile,
-            isMyProfile: currentUser?.username === profile.profile.username,
+            isMyProfile: currentUser?.username === profile.username,
+          }))
+        );
+      })
+    );
+  }
+
+  followProfile(
+    username: string,
+    state: boolean
+  ): Observable<{
+    profileDetails: TProfile;
+    isMyProfile: boolean;
+  }> {
+    return this._profileDataStr.followProfile(username, !state).pipe(
+      switchMap((profile: TProfile) => {
+        return this._authSrv.user$.pipe(
+          take(1),
+          map((currentUser) => ({
+            profileDetails: profile,
+            isMyProfile: currentUser?.username === profile.username,
           }))
         );
       })
