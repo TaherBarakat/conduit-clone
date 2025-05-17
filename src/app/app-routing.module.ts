@@ -7,7 +7,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ArticlePageComponent } from './article/components/article-page/article-page.component';
 import { commentsResolver } from './comment/components/comment/comments.resolver';
 import { SettingsComponent } from './settings/settings.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './profile/components/profile-page/profile.component';
 import { ArticleFormComponent } from './article/components/article-form/article-form.component';
 
 const routes: Routes = [

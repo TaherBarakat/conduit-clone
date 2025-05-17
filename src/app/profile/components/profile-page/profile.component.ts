@@ -1,0 +1,64 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ArticleService } from '../../../article/services/article.service';
+// import {
+// ArticleData
+import {
+  ArticleDataStorageService,
+  ArticleParams,
+} from '../../../article/services/article-data-storage.service';
+import { Subscription } from 'rxjs';
+import { article } from '../../../article/models/article.model';
+import { AuthService, user } from '../../../auth/auth.service';
+import { CurrencyPipe } from '@angular/common';
+import {
+  ProfileDataStorageService,
+  TProfile,
+} from '../../services/profile-data-storage.service';
+import { ProfileService } from '../../services/profile.service';
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css',
+})
+export class ProfileComponent implements OnInit {
+  private _dataStorageSrv = inject(ArticleDataStorageService);
+  private _articlesSrv = inject(ArticleService);
+  private route = inject(ActivatedRoute);
+  private _authSrv = inject(AuthService);
+  private _profileSrv = inject(ProfileService);
+
+  profile: {
+    profileDetails: TProfile;
+    isMyProfile: boolean;
+  };
+  articles: article[] = this._articlesSrv.articles;
+  articleSubscription = new Subscription();
+
+  articlesCount: number;
+  articlesCountSubscription = new Subscription();
+
+  pagination = [];
+  offset: number = 0;
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      const username = params['username'];
+      this._profileSrv.getProfile(username).subscribe((result) => {
+        this.profile = result;
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    // this.articleSubscription.unsubscribe();
+    // this.articlesCountSubscription.unsubscribe();
+  }
+
+  onSetOffset(offset) {
+    this.offset = offset;
+    let params = new ArticleParams({ offset: this.offset });
+    this._dataStorageSrv.loadArticles(params);
+  }
+}

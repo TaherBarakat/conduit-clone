@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
   constructor() {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl(''),
       username: new FormControl(''),
       bio: new FormControl(''),
       image: new FormControl(''),
@@ -42,12 +42,14 @@ export class SettingsComponent implements OnInit {
       },
     };
 
+    // console.log(updatedUser);
     let obs = {
       next: (updatedUser: signupResponse) => {
         this._authSrv.setUser(updatedUser.user);
       },
-      error: (error) => console.error(error), // you don't need `console.log(console.error(...))`
+      error: (error) => console.error(error),
     };
+
     this._authSrv.updateUserInfo(updatedUser).subscribe(obs);
   }
 }

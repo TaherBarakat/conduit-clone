@@ -22,9 +22,9 @@ import { ArticlePageComponent } from './article/components/article-page/article-
 import { CommentComponent } from './comment/components/comment/comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/auth.interceptor';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './profile/components/profile-page/profile.component';
 import { SettingsComponent } from './settings/settings.component';
-import { FavoritesComponent } from './profile/favorites/favorites.component';
+// import { FavoritesComponent } from './profile/favorites/favorites.component';
 import { ArticlesListItemComponent } from './article/components/articles-list-item/articles-list-item.component';
 import { ArticleFormComponent } from './article/components/article-form/article-form.component';
 import { TagsListComponent } from './home-page/components/tags-list/tags-list.component';
@@ -42,7 +42,7 @@ import { TagsListComponent } from './home-page/components/tags-list/tags-list.co
     CommentComponent,
     ProfileComponent,
     SettingsComponent,
-    FavoritesComponent,
+    // FavoritesComponent,
     ArticleFormComponent,
     TagsListComponent,
     // CommentComponent,
