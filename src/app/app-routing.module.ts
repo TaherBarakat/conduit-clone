@@ -50,8 +50,12 @@ const routes: Routes = [
   },
 
   {
+    path: 'editor',
     component: ArticleFormComponent,
-    path: 'editor/:article-slug',
+  },
+  {
+    path: 'editor/:articleSlug',
+    component: ArticleFormComponent,
   },
 ];
 

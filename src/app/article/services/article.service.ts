@@ -1,19 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { article } from '../models/article.model';
+import { ArticleDataStorageService } from './article-data-storage.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { articleForm } from '../models/articleForm.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
+  private _articleDataStrSrv = inject(ArticleDataStorageService);
   articles: article[] = [];
   articlesChanged = new Subject<article[]>();
 
   articlesCount: number = 0;
   articlesCountChanged = new Subject<number>();
-
-  constructor() {}
 
   setArticles(articles: article[]) {
     this.articles = [...articles];
@@ -34,5 +36,22 @@ export class ArticleService {
     )[0];
 
     return article;
+  }
+
+  submitArticleForm(articleInfo: articleForm, editMode: boolean) {
+    const { body, description, title, tags } = articleInfo.value;
+
+    const article = {
+      body,
+      description,
+      title,
+      ...(editMode ? {} : { tags }), // include tags only when not editing
+    };
+
+    const request = editMode
+      ? this._articleDataStrSrv.putArticle({ article })
+      : this._articleDataStrSrv.postArticle({ article });
+
+    return request;
   }
 }

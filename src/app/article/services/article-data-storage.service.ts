@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { article } from '../models/article.model';
+import { FormGroup } from '@angular/forms';
 // import { environment } from '../../environments/environments';
 
 export class ArticleParams {
@@ -56,14 +57,12 @@ export class ArticleParams {
   providedIn: 'root',
 })
 export class ArticleDataStorageService {
-  constructor(
-    private httpSrv: HttpClient,
-    private articleSrv: ArticleService
-  ) {}
+  private _httpSrv = inject(HttpClient);
+  constructor() {} // private articleSrv: ArticleService
   // offset = 0;
 
   loadArticles(params: ArticleParams) {
-    this.httpSrv
+    this._httpSrv
       .get<{
         articles: article[];
         articlesCount: number;
@@ -72,8 +71,37 @@ export class ArticleDataStorageService {
         params.getParams()
       )
       .subscribe((resData) => {
-        this.articleSrv.setArticlesCount(resData.articlesCount);
-        this.articleSrv.setArticles(resData.articles);
+        // this.articleSrv.setArticlesCount(resData.articlesCount);
+        // this.articleSrv.setArticles(resData.articles);
+      });
+  }
+
+  postArticle(articleInfo: {
+    article: {
+      title: string;
+      description: string;
+      body: string;
+      tags?: string[];
+    };
+  }) {
+    this._httpSrv
+      .post<article>(`${environment.apiUrl}/articles`, articleInfo)
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+  putArticle(articleInfo: {
+    article: {
+      title: string;
+      description: string;
+      body: string;
+      tags?: string[];
+    };
+  }) {
+    this._httpSrv
+      .put<article>(`${environment.apiUrl}/articles`, articleInfo)
+      .subscribe((res) => {
+        console.log(res);
       });
   }
 }
