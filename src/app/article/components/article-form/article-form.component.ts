@@ -10,8 +10,9 @@ import {
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environments';
-import { article } from '../../models/article.model';
+import { IArticle } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
+// import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-editor-page',
@@ -43,6 +44,7 @@ export class ArticleFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this._articleSrv.submitArticleForm(this.articleForm.value, this.editMode);
+    console.log(this.articleForm.value, '1');
+    this._articleSrv.submitArticleForm(this.articleForm, this.editMode);
   }
 }

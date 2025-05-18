@@ -1,6 +1,6 @@
 import { author } from './author.model';
 
-export type article = {
+export type IArticle = {
   slug: string;
   title: string;
   description: string;

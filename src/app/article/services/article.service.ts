@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { article } from '../models/article.model';
+import { IArticle } from '../models/article.model';
 import { ArticleDataStorageService } from './article-data-storage.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { articleForm } from '../models/articleForm.model';
@@ -11,13 +11,13 @@ import { articleForm } from '../models/articleForm.model';
 })
 export class ArticleService {
   private _articleDataStrSrv = inject(ArticleDataStorageService);
-  articles: article[] = [];
-  articlesChanged = new Subject<article[]>();
+  articles: IArticle[] = [];
+  articlesChanged = new Subject<IArticle[]>();
 
   articlesCount: number = 0;
   articlesCountChanged = new Subject<number>();
 
-  setArticles(articles: article[]) {
+  setArticles(articles: IArticle[]) {
     this.articles = [...articles];
     this.articlesChanged.next(this.articles);
   }
@@ -31,7 +31,7 @@ export class ArticleService {
     return this.articles.slice();
   }
   getArticleBySlug(slug: string) {
-    let article: article = this.articles.filter(
+    let article: IArticle = this.articles.filter(
       (article) => article.slug === slug
     )[0];
 
@@ -39,6 +39,7 @@ export class ArticleService {
   }
 
   submitArticleForm(articleInfo: articleForm, editMode: boolean) {
+    // console.log(articleInfo, editMode);
     const { body, description, title, tags } = articleInfo.value;
 
     const article = {

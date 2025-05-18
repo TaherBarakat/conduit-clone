@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
-import { article } from '../models/article.model';
+import { IArticle } from '../models/article.model';
 import { FormGroup } from '@angular/forms';
 // import { environment } from '../../environments/environments';
 
@@ -64,7 +64,7 @@ export class ArticleDataStorageService {
   loadArticles(params: ArticleParams) {
     this._httpSrv
       .get<{
-        articles: article[];
+        articles: IArticle[];
         articlesCount: number;
       }>(
         `${environment.apiUrl}/articles${params.myFeed ? '/feed' : ''}`,
@@ -76,6 +76,28 @@ export class ArticleDataStorageService {
       });
   }
 
+  getArticles(isMyFeed: boolean): Observable<{
+    articles: IArticle[];
+    articlesCount: number;
+  }> {
+    return this._httpSrv.get<{
+      articles: IArticle[];
+      articlesCount: number;
+    }>(`${environment.apiUrl}/articles${isMyFeed && '/feed'}`);
+  }
+
+  getArticle(articleSlug: string): Observable<{ article: IArticle[] }> {
+    return this._httpSrv.get<{
+      article: IArticle[];
+    }>(`${environment.apiUrl}/articles/${articleSlug}`);
+  }
+
+  deleteArticle(articleSlug: string) {
+    this._httpSrv
+      .delete(`${environment.apiUrl}/articles/${articleSlug}`)
+      .subscribe();
+  }
+
   postArticle(articleInfo: {
     article: {
       title: string;
@@ -85,11 +107,12 @@ export class ArticleDataStorageService {
     };
   }) {
     this._httpSrv
-      .post<article>(`${environment.apiUrl}/articles`, articleInfo)
+      .post<IArticle>(`${environment.apiUrl}/articles`, articleInfo)
       .subscribe((res) => {
         console.log(res);
       });
   }
+
   putArticle(articleInfo: {
     article: {
       title: string;
@@ -99,7 +122,7 @@ export class ArticleDataStorageService {
     };
   }) {
     this._httpSrv
-      .put<article>(`${environment.apiUrl}/articles`, articleInfo)
+      .put<IArticle>(`${environment.apiUrl}/articles`, articleInfo)
       .subscribe((res) => {
         console.log(res);
       });

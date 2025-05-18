@@ -8,7 +8,7 @@ import {
   ArticleService,
   // comment,
 } from '../../services/article.service';
-import { article } from '../../models/article.model';
+import { IArticle } from '../../models/article.model';
 import { comment } from '../../../comment/services/comment-data-storage.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { comment } from '../../../comment/services/comment-data-storage.service'
   styleUrl: './article-page.component.css',
 })
 export class ArticlePageComponent implements OnInit, OnDestroy {
-  article: article;
+  article: IArticle;
   comments: comment[] = [];
 
   commentsSub: Subscription;

@@ -8,7 +8,7 @@ import {
   ArticleParams,
 } from '../../../article/services/article-data-storage.service';
 import { Subscription, take } from 'rxjs';
-import { article } from '../../../article/models/article.model';
+import { IArticle } from '../../../article/models/article.model';
 import { AuthService, user } from '../../../auth/auth.service';
 import { CurrencyPipe } from '@angular/common';
 import {
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
     profileDetails: TProfile;
     isMyProfile: boolean;
   };
-  articles: article[] = this._articlesSrv.articles;
+  articles: IArticle[] = this._articlesSrv.articles;
   articleSubscription = new Subscription();
 
   articlesCount: number;

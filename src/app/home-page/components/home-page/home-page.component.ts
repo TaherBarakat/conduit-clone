@@ -11,7 +11,7 @@ import {
   ArticleParams,
 } from '../../../article/services/article-data-storage.service';
 import { HomePageService } from '../../services/home-page.service';
-import { article } from '../../../article/models/article.model';
+import { IArticle } from '../../../article/models/article.model';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private _dataStorageSrv = inject(ArticleDataStorageService);
   private route = inject(ActivatedRoute);
 
-  articles: article[] = this._articlesSrv.articles;
+  articles: IArticle[] = this._articlesSrv.articles;
   articleSubscription = new Subscription();
 
   articlesCount: number;

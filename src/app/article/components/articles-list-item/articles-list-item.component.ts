@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { article } from '../../models/article.model';
+import { IArticle } from '../../models/article.model';
 // import { article } from '../../services/article.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { article } from '../../models/article.model';
   styleUrl: './articles-list-item.component.css',
 })
 export class ArticlesListItemComponent implements OnInit {
-  @Input('article') article: article;
+  @Input('article') article: IArticle;
 
   ngOnInit() {
     // console.log(this.article);
