@@ -57,29 +57,12 @@ export class ArticleParams {
 })
 export class ArticleDataStorageService {
   private _httpSrv = inject(HttpClient);
-  // private articleSrv: ArticleService
-  // offset = 0;
-
-  // loadArticles(params: ArticleParams) {
-  //   this._httpSrv
-  //     .get<{
-  //       articles: IArticle[];
-  //       articlesCount: number;
-  //     }>(
-  //       `${environment.apiUrl}/articles${params.myFeed ? '/feed' : ''}`,
-  //       params.getParams()
-  //     )
-  //     .subscribe((resData) => {
-  //       // this.articleSrv.setArticlesCount(resData.articlesCount);
-  //       // this.articleSrv.setArticles(resData.articles);
-  //     });
-  // }
 
   getArticles(params: ArticleParams): Observable<{
     articles: IArticle[];
     articlesCount: number;
   }> {
-    console.log(params);
+    // console.log(params);
     return this._httpSrv
       .get<{
         articles: IArticle[];
@@ -99,9 +82,9 @@ export class ArticleDataStorageService {
 
   // Get recent articles globallY / Get recent articles from users you follow
 
-  getArticle(articleSlug: string): Observable<{ article: IArticle[] }> {
+  getArticleBySlug(articleSlug: string): Observable<{ article: IArticle }> {
     return this._httpSrv.get<{
-      article: IArticle[];
+      article: IArticle;
     }>(`${environment.apiUrl}/articles/${articleSlug}`);
   }
 
@@ -120,9 +103,11 @@ export class ArticleDataStorageService {
     };
   }) {
     this._httpSrv
-      .post<IArticle>(`${environment.apiUrl}/articles`, articleInfo)
+      .post<{
+        article: IArticle;
+      }>(`${environment.apiUrl}/articles`, articleInfo)
       .subscribe((res) => {
-        console.log(res);
+        // console.log(res);
       });
   }
 
@@ -135,9 +120,23 @@ export class ArticleDataStorageService {
     };
   }) {
     this._httpSrv
-      .put<IArticle>(`${environment.apiUrl}/articles`, articleInfo)
+      .put<{
+        article: IArticle;
+      }>(`${environment.apiUrl}/articles`, articleInfo)
       .subscribe((res) => {
-        console.log(res);
+        // console.log(res);
       });
+  }
+
+  favoriteArticle(articleSlug: string, state: boolean) {
+    const api = `${environment.apiUrl}/articles/${articleSlug}/favorite`;
+
+    return state
+      ? this._httpSrv.post<{
+          article: IArticle;
+        }>(api, {})
+      : this._httpSrv.delete<{
+          article: IArticle;
+        }>(api);
   }
 }

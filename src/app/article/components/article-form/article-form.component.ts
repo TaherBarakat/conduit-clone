@@ -44,7 +44,7 @@ export class ArticleFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.articleForm.value, '1');
+    // console.log(this.articleForm.value, '1');
     this._articleSrv.submitArticleForm(this.articleForm, this.editMode);
   }
 }

@@ -78,7 +78,7 @@ export class AuthService {
       this._httpSrv
         .get<signupResponse>(`${environment.apiUrl}/user`)
         .pipe(
-          tap((res) => console.log(res, 'resssssssssssssssss')),
+          // tap((res) => console.log(res, 'resssssssssssssssss')),
           map((resData) => resData.user),
           catchError((message) => {
             localStorage.removeItem(TOKEN_KEY);

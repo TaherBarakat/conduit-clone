@@ -38,7 +38,7 @@ export class ArticleService {
     this.pagination.length = 0;
 
     for (let set = 0; set < this.articlesCount; set += articleParams.limit) {
-      console.log(set, 'set');
+      // console.log(set, 'set');
       this.pagination.push(set);
     }
     this.offset = articleParams.offset;

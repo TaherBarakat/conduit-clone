@@ -12,9 +12,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     { method: 'POST', path: '/articles' },
     { method: 'POST', path: '/follow' },
     { method: 'DELETE', path: '/follow' },
+    { method: 'POST', path: '/favorite' },
+    { method: 'DELETE', path: '/favorite' },
   ];
   const apiUrlsKeyWordsRequiringAuth = [
     { method: 'GET', keyWord: '/profiles' },
+    { method: 'GET', keyWord: '/articles' },
   ];
   if (token && apiUrlsRequiringAuth.some((url) => req.url.endsWith(url.path))) {
     for (const api of apiUrlsRequiringAuth) {
