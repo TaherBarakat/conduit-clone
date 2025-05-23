@@ -19,16 +19,18 @@ export class ArticleService {
   articlesCount: number = 0;
 
   pagination: number[] = [];
-  offset: number = 0;
+  // offset: number = 0;
 
+  articles$ = new Subject<IArticle[]>();
   // articlesChanged = new Subject<IArticle[]>();
 
   // articlesCountChanged = new Subject<number>();
 
   setArticles(articleParams: ArticleParams) {
     this._articleDataStrSrv.getArticles(articleParams).subscribe((res) => {
-      this.articles.length = 0;
-      this.articles.push(...res.articles);
+      // this.articles.length = 0;
+      // this.articles.push(...res.articles);
+      this.articles$.next(res.articles);
       this.articlesCount = res.articlesCount;
       this._setArticleListPaginationDeities(articleParams);
     });
@@ -41,7 +43,7 @@ export class ArticleService {
       // console.log(set, 'set');
       this.pagination.push(set);
     }
-    this.offset = articleParams.offset;
+    // this.offset = articleParams.offset;
   }
 
   getArticleBySlug(slug: string) {

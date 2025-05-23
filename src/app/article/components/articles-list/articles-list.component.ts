@@ -21,11 +21,12 @@ export class ArticlesListComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   articles: IArticle[] = this._articlesSrv.articles;
-  articlesCount: number;
+  // articlesCount: number;
+  articles$ = this._articlesSrv.articles$;
   private _routeSub = new Subscription();
 
   pagination = this._articlesSrv.pagination;
-  offset: number = this._articlesSrv.offset;
+  // offset: number = this._articlesSrv.offset;
 
   articleParams = new ArticleParams({});
   ngOnInit(): void {
@@ -39,20 +40,25 @@ export class ArticlesListComponent implements OnInit {
       const isFavorited = queryParams.get('favorited'); // Query param
       const page: 'home' | 'profile' | undefined = urlSegments[0]?.path as any;
       // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-      this.articleParams.author = username;
+      if (username) {
+        this.articleParams.favorited = undefined;
+        this.articleParams.author = username;
+      }
       // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       if (isFavorited == 'true') {
         this.articleParams.favorited = username;
         this.articleParams.author = undefined;
       }
+      // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       this.articleParams.myFeed = isMyFeed === 'true';
       // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+      this.articleParams.offset = 0;
       this._articlesSrv.setArticles(this.articleParams);
     });
   }
 
   onSetOffset(offset) {
-    this.offset = offset;
+    // this.offset = offset;
     this.articleParams.offset = offset;
     this._articlesSrv.setArticles(this.articleParams);
     // this._dataStorageSrv.loadArticles(params);
