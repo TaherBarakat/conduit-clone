@@ -1,11 +1,3 @@
-<!-- <div>
-  <button (click)="f()"></button>
-  @for (item of d; track $index) {
-  <p>
-    {{ item }}
-  </p>
-  }
-</div> -->
 <div class="home-page">
   <div class="banner">
     <div class="container">
@@ -40,30 +32,7 @@
             </li>
           </ul>
         </div>
-        <h4 *ngIf="articles.length === 0">
-          Let's create your first article
-          <span
-            routerLink="/editor"
-            [ngStyle]="{ cursor: 'pointer', 'font-weight': 900 }"
-            >&rarr;</span
-          >
-        </h4>
-        <app-articles-item
-          *ngFor="let article of articles"
-          [article]="article"
-        />
-
-        <ul class="pagination">
-          <li
-            *ngFor="let PageOffset of pagination; index as i"
-            class="page-item active"
-            [ngClass]="{ active: PageOffset == offset }"
-          >
-            <a class="page-link" (click)="onSetOffset(PageOffset)">{{
-              i + 1
-            }}</a>
-          </li>
-        </ul>
+        <app-articles-list />
       </div>
 
       <div class="col-md-3">

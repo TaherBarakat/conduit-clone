@@ -33,14 +33,6 @@ export class ProfileComponent implements OnInit {
     profileDetails: TProfile;
     isMyProfile: boolean;
   };
-  articles: IArticle[] = this._articlesSrv.articles;
-  articleSubscription = new Subscription();
-
-  articlesCount: number;
-  articlesCountSubscription = new Subscription();
-
-  pagination = [];
-  offset: number = 0;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -65,10 +57,5 @@ export class ProfileComponent implements OnInit {
       .subscribe((result) => {
         this.profile = result;
       });
-  }
-  onSetOffset(offset) {
-    this.offset = offset;
-    let params = new ArticleParams({ offset: this.offset });
-    this._dataStorageSrv.loadArticles(params);
   }
 }

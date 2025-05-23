@@ -25,9 +25,10 @@ import { authInterceptor } from './auth/auth.interceptor';
 import { ProfileComponent } from './profile/components/profile-page/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 // import { FavoritesComponent } from './profile/favorites/favorites.component';
-import { ArticlesListItemComponent } from './article/components/articles-list-item/articles-list-item.component';
+import { ArticlesListItemComponent } from './article/components/articles-list/articles-list-item/articles-list-item.component';
 import { ArticleFormComponent } from './article/components/article-form/article-form.component';
 import { TagsListComponent } from './home-page/components/tags-list/tags-list.component';
+import { ArticlesListComponent } from './article/components/articles-list/articles-list.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { TagsListComponent } from './home-page/components/tags-list/tags-list.co
     // FavoritesComponent,
     ArticleFormComponent,
     TagsListComponent,
+    ArticlesListComponent,
     // CommentComponent,
     // ArticleViewComponent,
   ],

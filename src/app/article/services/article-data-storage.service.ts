@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { IArticle } from '../models/article.model';
 import { FormGroup } from '@angular/forms';
 // import { environment } from '../../environments/environments';
 
 export class ArticleParams {
-  1;
   myFeed?: boolean;
   tag?: string;
   author?: string;
-  favorited?: boolean;
+  favorited?: string;
   offset?: number;
   limit?: number;
   constructor({
@@ -21,12 +20,12 @@ export class ArticleParams {
     author,
     favorited,
     offset = 0,
-    limit = 20,
+    limit = 5,
   }: {
     myFeed?: boolean;
     tag?: string;
     author?: string;
-    favorited?: boolean;
+    favorited?: string;
     offset?: number;
     limit?: number;
   }) {
@@ -58,11 +57,30 @@ export class ArticleParams {
 })
 export class ArticleDataStorageService {
   private _httpSrv = inject(HttpClient);
-  constructor() {} // private articleSrv: ArticleService
+  // private articleSrv: ArticleService
   // offset = 0;
 
-  loadArticles(params: ArticleParams) {
-    this._httpSrv
+  // loadArticles(params: ArticleParams) {
+  //   this._httpSrv
+  //     .get<{
+  //       articles: IArticle[];
+  //       articlesCount: number;
+  //     }>(
+  //       `${environment.apiUrl}/articles${params.myFeed ? '/feed' : ''}`,
+  //       params.getParams()
+  //     )
+  //     .subscribe((resData) => {
+  //       // this.articleSrv.setArticlesCount(resData.articlesCount);
+  //       // this.articleSrv.setArticles(resData.articles);
+  //     });
+  // }
+
+  getArticles(params: ArticleParams): Observable<{
+    articles: IArticle[];
+    articlesCount: number;
+  }> {
+    console.log(params);
+    return this._httpSrv
       .get<{
         articles: IArticle[];
         articlesCount: number;
@@ -70,21 +88,16 @@ export class ArticleDataStorageService {
         `${environment.apiUrl}/articles${params.myFeed ? '/feed' : ''}`,
         params.getParams()
       )
-      .subscribe((resData) => {
-        // this.articleSrv.setArticlesCount(resData.articlesCount);
-        // this.articleSrv.setArticles(resData.articles);
-      });
+      .pipe(
+        tap((x) => {
+          console.log('articles');
+
+          console.log(x);
+        })
+      );
   }
 
-  getArticles(isMyFeed: boolean): Observable<{
-    articles: IArticle[];
-    articlesCount: number;
-  }> {
-    return this._httpSrv.get<{
-      articles: IArticle[];
-      articlesCount: number;
-    }>(`${environment.apiUrl}/articles${isMyFeed && '/feed'}`);
-  }
+  // Get recent articles globallY / Get recent articles from users you follow
 
   getArticle(articleSlug: string): Observable<{ article: IArticle[] }> {
     return this._httpSrv.get<{
