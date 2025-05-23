@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { HomePageService } from '../../../home-page/services/home-page.service';
 import { IArticle } from '../../models/article.model';
 import {
@@ -20,15 +20,13 @@ export class ArticlesListComponent implements OnInit {
   private _articleDataStr = inject(ArticleDataStorageService);
   private route = inject(ActivatedRoute);
 
-  articles: IArticle[] = this._articlesSrv.articles;
-  // articlesCount: number;
-  articles$ = this._articlesSrv.articles$;
   private _routeSub = new Subscription();
 
-  pagination = this._articlesSrv.pagination;
-  // offset: number = this._articlesSrv.offset;
-
   articleParams = new ArticleParams({});
+
+  articles$: Subject<IArticle[]> = this._articlesSrv.articles$;
+  pagination = this._articlesSrv.pagination;
+
   ngOnInit(): void {
     this._routeSub = combineLatest([
       this.route.paramMap,
@@ -58,9 +56,7 @@ export class ArticlesListComponent implements OnInit {
   }
 
   onSetOffset(offset) {
-    // this.offset = offset;
     this.articleParams.offset = offset;
     this._articlesSrv.setArticles(this.articleParams);
-    // this._dataStorageSrv.loadArticles(params);
   }
 }

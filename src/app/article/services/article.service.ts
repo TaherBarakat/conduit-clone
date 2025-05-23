@@ -15,36 +15,27 @@ import { ThisReceiver } from '@angular/compiler';
 })
 export class ArticleService {
   private _articleDataStrSrv = inject(ArticleDataStorageService);
-  articles: IArticle[] = [];
-  articlesCount: number = 0;
-
-  pagination: number[] = [];
-  // offset: number = 0;
 
   articles$ = new Subject<IArticle[]>();
-  // articlesChanged = new Subject<IArticle[]>();
-
-  // articlesCountChanged = new Subject<number>();
+  pagination: number[] = [];
 
   setArticles(articleParams: ArticleParams) {
     this._articleDataStrSrv.getArticles(articleParams).subscribe((res) => {
-      // this.articles.length = 0;
-      // this.articles.push(...res.articles);
       this.articles$.next(res.articles);
-      this.articlesCount = res.articlesCount;
-      this._setArticleListPaginationDeities(articleParams);
+      this._setArticleListPaginationDeities(articleParams, res.articlesCount);
     });
   }
 
-  private _setArticleListPaginationDeities(articleParams: ArticleParams) {
+  private _setArticleListPaginationDeities(
+    articleParams: ArticleParams,
+    articlesCount: number
+  ) {
     this.pagination.length = 0;
-
-    for (let set = 0; set < this.articlesCount; set += articleParams.limit) {
-      // console.log(set, 'set');
+    for (let set = 0; set < articlesCount; set += articleParams.limit) {
       this.pagination.push(set);
     }
-    // this.offset = articleParams.offset;
   }
+  articles: IArticle[] = [];
 
   getArticleBySlug(slug: string) {
     let article: IArticle = this.articles.filter(
