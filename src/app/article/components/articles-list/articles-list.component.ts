@@ -38,12 +38,15 @@ export class ArticlesListComponent implements OnInit {
       const isMyFeed = queryParams.get('my-feed'); // Query param
       const isFavorited = queryParams.get('favorited'); // Query param
       const page: 'home' | 'profile' | undefined = urlSegments[0]?.path as any;
-      // ==========
+      // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       this.articleParams.author = username;
-      this.articleParams.favorited =
-        isFavorited == 'true' ? username : undefined;
+      // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+      if (isFavorited == 'true') {
+        this.articleParams.favorited = username;
+        this.articleParams.author = undefined;
+      }
       this.articleParams.myFeed = isMyFeed === 'true';
-      // ==========
+      // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       this._articlesSrv.setArticles(this.articleParams);
     });
   }
