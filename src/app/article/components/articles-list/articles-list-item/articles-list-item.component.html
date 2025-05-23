@@ -1,8 +1,8 @@
 <div class="article-preview">
   <div class="article-meta">
-    <a href="/profile/albert-pai"><img [src]="article.author.image" /></a>
+    <a (click)="onNavToAuthor()"><img [src]="article.author.image" /></a>
     <div class="info">
-      <a [routerLink]="['/profile', article.author.username]" class="author">{{
+      <a (click)="onNavToAuthor()" class="author">{{
         article.author.username
       }}</a>
       <span class="date">{{ article.createdAt | date : "medium" }}</span>
@@ -12,10 +12,10 @@
     </button>
   </div>
   <!-- <a routerLink="/article/the-song-you" class="preview-link"> -->
-  <a [routerLink]="['/article', article.slug]" class="preview-link">
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.description }}</p>
-    <span>Read more...</span>
+  <a class="preview-link pointer">
+    <h1 (click)="onNavToReadArticle()">{{ article.title }}</h1>
+    <p (click)="onNavToReadArticle()">{{ article.description }}</p>
+    <span (click)="onNavToReadArticle()">Read more...</span>
     <ul class="tag-list">
       <li
         *ngFor="let tag of article.tagList"

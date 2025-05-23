@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Inject, Input, OnInit } from '@angular/core';
 import { IArticle } from '../../../models/article.model';
+import { Router } from '@angular/router';
 // import { article } from '../../services/article.service';
 
 @Component({
@@ -9,8 +10,14 @@ import { IArticle } from '../../../models/article.model';
 })
 export class ArticlesListItemComponent implements OnInit {
   @Input('article') article: IArticle;
-
+  private _router = inject(Router);
   ngOnInit() {
     // console.log(this.article);
+  }
+  onNavToAuthor() {
+    this._router.navigate(['/profile', this.article.author.username]);
+  }
+  onNavToReadArticle() {
+    this._router.navigate(['/article', this.article.slug]);
   }
 }
