@@ -25,13 +25,11 @@ export class ArticleService {
 
   setArticleParams(articleParams: ArticleParams) {
     this.articleParams = new ArticleParams(articleParams);
-    this.tagFilter$.next(this.articleParams.tag);
   }
 
   setTagFilter(tag: string, state: boolean) {
-    console.log('setTagFilter');
     this.articleParams.tag = this.articleParams.tag === tag ? undefined : tag;
-
+    this.tagFilter$.next(this.articleParams.tag);
     if (state) this.setArticles();
   }
 
