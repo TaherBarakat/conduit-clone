@@ -84,11 +84,7 @@ export class ArticleService {
 
     return request;
   }
-  toggleFavorite(article: IArticle) {
-    this._articleDataStrSrv.favoriteArticle(article.slug, !article.favorited);
-    // .subscribe((res) => {
-    //   this.article.favorited = res.article.favorited;
-    //   this.article.favoritesCount = res.article.favoritesCount;
-    // });
-  }
+  // toggleFavorite(){
+  //   this
+  // }
 }
