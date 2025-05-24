@@ -537,6 +537,13 @@ h6 {
   box-shadow: var(--shadow-sm);
   text-decoration: none;
 }
+.tag-default.active {
+  background: var(--primary-color);
+  color: var(--text-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
 
 .tag-pill {
   position: relative;

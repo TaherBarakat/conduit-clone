@@ -51,12 +51,14 @@ export class ArticlesListComponent implements OnInit {
       this.articleParams.myFeed = isMyFeed === 'true';
       // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       this.articleParams.offset = 0;
-      this._articlesSrv.setArticles(this.articleParams);
+      this._articlesSrv.setArticleParams(this.articleParams);
+      this._articlesSrv.setArticles();
     });
   }
 
   onSetOffset(offset) {
     this.articleParams.offset = offset;
-    this._articlesSrv.setArticles(this.articleParams);
+    this._articlesSrv.setArticleParams(this.articleParams);
+    this._articlesSrv.setArticles();
   }
 }

@@ -18,12 +18,6 @@ export class ArticlesListItemComponent implements OnInit {
   }
   onFavorite() {
     console.log(this.article.favorited);
-    this._articleDataStr
-      .favoriteArticle(this.article.slug, !this.article.favorited)
-      .subscribe((res) => {
-        this.article.favorited = res.article.favorited;
-        this.article.favoritesCount = res.article.favoritesCount;
-      });
   }
   onNavToAuthor() {
     this._router.navigate(['/profile', this.article.author.username]);

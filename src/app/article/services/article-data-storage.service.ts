@@ -62,7 +62,7 @@ export class ArticleDataStorageService {
     articles: IArticle[];
     articlesCount: number;
   }> {
-    // console.log(params);
+    console.log(params);
     return this._httpSrv
       .get<{
         articles: IArticle[];
@@ -73,9 +73,8 @@ export class ArticleDataStorageService {
       )
       .pipe(
         tap((x) => {
-          console.log('articles');
-
-          console.log(x);
+          // console.log('articles');
+          // console.log(x);
         })
       );
   }

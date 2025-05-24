@@ -2,8 +2,13 @@
   <p>Popular Tags</p>
 
   <div class="tag-list">
-    <a *ngFor="let tag of tags" href="" class="tag-pill tag-default">{{
-      tag
-    }}</a>
+    <a
+      style="cursor: pointer"
+      (click)="onSetTagFilter(tag)"
+      *ngFor="let tag of tags"
+      class="tag-pill tag-default"
+      [class.active]="tag == tagFilter"
+      >{{ tag }}</a
+    >
   </div>
 </div>

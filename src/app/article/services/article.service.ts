@@ -18,11 +18,32 @@ export class ArticleService {
 
   articles$ = new Subject<IArticle[]>();
   pagination: number[] = [];
+  // tagFilter: string;
 
-  setArticles(articleParams: ArticleParams) {
-    this._articleDataStrSrv.getArticles(articleParams).subscribe((res) => {
+  articleParams: ArticleParams;
+  tagFilter$: Subject<string> = new Subject();
+
+  setArticleParams(articleParams: ArticleParams) {
+    this.articleParams = new ArticleParams(articleParams);
+    this.tagFilter$.next(this.articleParams.tag);
+  }
+
+  setTagFilter(tag: string, state: boolean) {
+    console.log('setTagFilter');
+    this.articleParams.tag = this.articleParams.tag === tag ? undefined : tag;
+
+    if (state) this.setArticles();
+  }
+
+  setArticles() {
+    console.log('setArticles');
+
+    this._articleDataStrSrv.getArticles(this.articleParams).subscribe((res) => {
       this.articles$.next(res.articles);
-      this._setArticleListPaginationDeities(articleParams, res.articlesCount);
+      this._setArticleListPaginationDeities(
+        this.articleParams,
+        res.articlesCount
+      );
     });
   }
 
@@ -35,6 +56,7 @@ export class ArticleService {
       this.pagination.push(set);
     }
   }
+
   articles: IArticle[] = [];
 
   getArticleBySlug(slug: string) {
@@ -61,5 +83,12 @@ export class ArticleService {
       : this._articleDataStrSrv.postArticle({ article });
 
     return request;
+  }
+  toggleFavorite(article: IArticle) {
+    this._articleDataStrSrv.favoriteArticle(article.slug, !article.favorited);
+    // .subscribe((res) => {
+    //   this.article.favorited = res.article.favorited;
+    //   this.article.favoritesCount = res.article.favoritesCount;
+    // });
   }
 }

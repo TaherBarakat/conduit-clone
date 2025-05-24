@@ -35,9 +35,12 @@
         <app-articles-list />
       </div>
 
+      @if (!isTagsHidden) {
+
       <div class="col-md-3">
         <app-tags-list />
       </div>
+      }
     </div>
   </div>
 </div>
