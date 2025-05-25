@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { IArticle } from '../models/article.model';
 import { FormGroup } from '@angular/forms';
@@ -81,10 +81,12 @@ export class ArticleDataStorageService {
 
   // Get recent articles globallY / Get recent articles from users you follow
 
-  getArticleBySlug(articleSlug: string): Observable<{ article: IArticle }> {
-    return this._httpSrv.get<{
-      article: IArticle;
-    }>(`${environment.apiUrl}/articles/${articleSlug}`);
+  getArticleBySlug(articleSlug: string): Observable<IArticle> {
+    return this._httpSrv
+      .get<{
+        article: IArticle;
+      }>(`${environment.apiUrl}/articles/${articleSlug}`)
+      .pipe(map((res) => res.article));
   }
 
   deleteArticle(articleSlug: string) {

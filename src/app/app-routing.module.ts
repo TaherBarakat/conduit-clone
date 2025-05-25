@@ -1,6 +1,12 @@
-import { NgModule } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterModule,
+  RouterStateSnapshot,
+  Routes,
+} from '@angular/router';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
@@ -9,7 +15,19 @@ import { commentsResolver } from './comment/components/comment/comments.resolver
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/components/profile-page/profile.component';
 import { ArticleFormComponent } from './article/components/article-form/article-form.component';
+import { Observable } from 'rxjs';
+import { ArticleDataStorageService } from './article/services/article-data-storage.service';
+import { ArticleService } from './article/services/article.service';
+import { IArticle } from './article/models/article.model';
 
+export const resolveArticle: ResolveFn<Observable<IArticle>> = (
+  route: ActivatedRouteSnapshot,
+  routerState: RouterStateSnapshot
+) => {
+  const articleSrv = inject(ArticleService);
+  // console.log();
+  return articleSrv.getArticleBySlug(route.params['article-slug']);
+};
 const routes: Routes = [
   {
     path: '',
@@ -37,6 +55,7 @@ const routes: Routes = [
     component: ArticlePageComponent,
     path: 'article/:article-slug',
     resolve: {
+      article: resolveArticle,
       comments: commentsResolver,
     },
   },

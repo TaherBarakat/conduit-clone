@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IArticle } from '../models/article.model';
 import {
   ArticleDataStorageService,
@@ -57,12 +57,8 @@ export class ArticleService {
 
   articles: IArticle[] = [];
 
-  getArticleBySlug(slug: string) {
-    let article: IArticle = this.articles.filter(
-      (article) => article.slug === slug
-    )[0];
-
-    return article;
+  getArticleBySlug(slug: string): Observable<IArticle> {
+    return this._articleDataStrSrv.getArticleBySlug(slug);
   }
 
   submitArticleForm(articleInfo: articleForm, editMode: boolean) {

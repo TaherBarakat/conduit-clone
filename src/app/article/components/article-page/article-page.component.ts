@@ -1,43 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-// import { article, ArticlesService, comment } from '../shared/articles.service';
-import { ActivatedRoute, Route } from '@angular/router';
-// import { DataStorageService } from '../shared/data-storage.service';
-import { map, Observable, Subscription } from 'rxjs';
-import {
-  // article,
-  ArticleService,
-  // comment,
-} from '../../services/article.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IArticle } from '../../models/article.model';
 import { comment } from '../../../comment/services/comment-data-storage.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-article',
   templateUrl: './article-page.component.html',
-  styleUrl: './article-page.component.css',
+  styleUrls: ['./article-page.component.css'],
 })
 export class ArticlePageComponent implements OnInit, OnDestroy {
-  article: IArticle;
+  article!: IArticle;
   comments: comment[] = [];
+  private dataSub!: Subscription;
 
-  commentsSub: Subscription;
-
-  constructor(
-    private articleSrv: ArticleService,
-    private actRoute: ActivatedRoute
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    const articleSlug = this.actRoute.snapshot.paramMap.get('article-slug');
-
-    this.article = this.articleSrv.getArticleBySlug(articleSlug);
-
-    this.commentsSub = this.actRoute.data.subscribe((data) => {
-      // console.log(data);
-      this.comments = data.comments;
+    this.dataSub = this.route.data.subscribe((data) => {
+      this.article = data['article'];
+      this.comments = data['comments'];
     });
   }
-  ngOnDestroy(): void {
-    this.commentsSub.unsubscribe();
+
+  ngOnDestroy() {
+    this.dataSub?.unsubscribe();
   }
 }

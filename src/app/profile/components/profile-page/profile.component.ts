@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   private _authSrv = inject(AuthService);
   private _profileSrv = inject(ProfileService);
 
-  profile: {
+  profile!: {
     profileDetails: TProfile;
     isMyProfile: boolean;
   };
