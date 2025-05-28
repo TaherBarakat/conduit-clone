@@ -12,7 +12,5 @@ import {
 export const commentsResolver: ResolveFn<comment[]> = (route, state) => {
   let commentStr = inject(CommentDataStorageService);
 
-  return commentStr
-    .loadComments(route.params['article-slug'])
-    .pipe(map((data) => data.comments));
+  return commentStr.loadComments(route.params['article-slug']);
 };

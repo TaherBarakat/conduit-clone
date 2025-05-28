@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ArticleService } from '../../article/services/article.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { author } from '../../article/models/author.model';
 export type comment = {
@@ -16,9 +16,29 @@ export type comment = {
 })
 export class CommentDataStorageService {
   private _httpSrv = inject(HttpClient);
-  loadComments(slug: string): Observable<{ comments: comment[] }> {
-    return this._httpSrv.get<{ comments: comment[] }>(
-      `${environment.apiUrl}/articles/${slug}/comments`
-    );
+
+  loadComments(slug: string): Observable<comment[]> {
+    return this._httpSrv
+      .get<{ comments: comment[] }>(
+        `${environment.apiUrl}/articles/${slug}/comments`
+      )
+      .pipe(map((res) => res.comments));
   }
-} // constructor() {}
+
+  postComment(slug: string, newComment: string) {
+    let reqBody = { comment: { body: newComment } };
+    return this._httpSrv
+      .post<{ comment: comment }>(
+        `${environment.apiUrl}/articles/${slug}/comments`,
+        reqBody
+      )
+      .pipe(map((res) => res.comment));
+  }
+
+  deleteComment(slug: string, commentId: number) {
+    return this._httpSrv.delete<{ comment: comment }>(
+      `${environment.apiUrl}/articles/${slug}/comments/${commentId}`
+    );
+    // .pipe(map((res) => res.comment));
+  }
+}

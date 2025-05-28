@@ -44,15 +44,17 @@
         <h2 id="introducing-ionic">{{ article.description }}</h2>
         <p>{{ article.body }}</p>
         <ul class="tag-list">
-          <li class="tag-default tag-pill tag-outline">realworld</li>
-          <li class="tag-default tag-pill tag-outline">implementations</li>
+          @for (tag of article.tagList; track $index) {
+
+          <li class="tag-default tag-pill tag-outline">{{ tag }}</li>
+          }
         </ul>
       </div>
     </div>
 
     <hr />
 
-    <div class="article-actions">
+    <!-- <div class="article-actions">
       <div class="article-meta">
         <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
         <div class="info">
@@ -76,7 +78,7 @@
           <i class="ion-trash-a"></i> Delete Article
         </button>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-md-2">

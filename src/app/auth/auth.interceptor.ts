@@ -18,6 +18,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const apiUrlsKeyWordsRequiringAuth = [
     { method: 'GET', keyWord: '/profiles' },
     { method: 'GET', keyWord: '/articles' },
+    { method: 'POST', keyWord: '/comments' },
+    { method: 'DELETE', keyWord: '/comments' },
   ];
   if (token && apiUrlsRequiringAuth.some((url) => req.url.endsWith(url.path))) {
     for (const api of apiUrlsRequiringAuth) {
