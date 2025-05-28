@@ -15,44 +15,46 @@ import { ThisReceiver } from '@angular/compiler';
 })
 export class ArticleService {
   private _articleDataStrSrv = inject(ArticleDataStorageService);
+  private _articleParams: ArticleParams;
 
   articles$ = new Subject<IArticle[]>();
-  pagination: number[] = [];
-  // tagFilter: string;
-
-  articleParams: ArticleParams;
+  pagination$ = new Subject<number[]>();
   tagFilter$: Subject<string> = new Subject();
 
   setArticleParams(articleParams: ArticleParams) {
-    this.articleParams = new ArticleParams(articleParams);
+    this._articleParams = new ArticleParams(articleParams);
   }
 
   setTagFilter(tag: string, state: boolean) {
-    this.articleParams.tag = this.articleParams.tag === tag ? undefined : tag;
-    this.tagFilter$.next(this.articleParams.tag);
+    this._articleParams.tag = this._articleParams.tag === tag ? undefined : tag;
+    this.tagFilter$.next(this._articleParams.tag);
     if (state) this.setArticles();
   }
 
   setArticles() {
     console.log('setArticles');
 
-    this._articleDataStrSrv.getArticles(this.articleParams).subscribe((res) => {
-      this.articles$.next(res.articles);
-      this._setArticleListPaginationDeities(
-        this.articleParams,
-        res.articlesCount
-      );
-    });
+    this._articleDataStrSrv
+      .getArticles(this._articleParams)
+      .subscribe((res) => {
+        this.articles$.next(res.articles);
+        this._setArticleListPaginationDeities(
+          this._articleParams,
+          res.articlesCount
+        );
+      });
   }
 
   private _setArticleListPaginationDeities(
     articleParams: ArticleParams,
     articlesCount: number
   ) {
-    this.pagination.length = 0;
+    let pagination = [];
+    // this.pagination.length = 0;
     for (let set = 0; set < articlesCount; set += articleParams.limit) {
-      this.pagination.push(set);
+      pagination.push(set);
     }
+    this.pagination$.next(pagination);
   }
 
   articles: IArticle[] = [];

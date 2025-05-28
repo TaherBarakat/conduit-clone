@@ -25,7 +25,7 @@ export class ArticlesListComponent implements OnInit {
   articleParams = new ArticleParams({});
 
   articles$: Subject<IArticle[]> = this._articlesSrv.articles$;
-  pagination = this._articlesSrv.pagination;
+  pagination$: Subject<number[]> = this._articlesSrv.pagination$;
 
   ngOnInit(): void {
     this._routeSub = combineLatest([
