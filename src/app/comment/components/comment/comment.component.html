@@ -5,13 +5,18 @@
     </p>
   </div>
   <div class="card-footer">
-    <a href="/profile/author" class="comment-author">
+    <a
+      [routerLink]="['/profiles', comment.author.username]"
+      class="comment-author"
+    >
       <img [src]="comment.author.image" class="comment-author-img" />
     </a>
     &nbsp;
-    <a href="/profile/jacob-schmidt" class="comment-author">{{
-      comment.author.username
-    }}</a>
+    <a
+      [routerLink]="['/profiles', comment.author.username]"
+      class="comment-author"
+      >{{ comment.author.username }}</a
+    >
     <span class="date-posted">{{ comment.createdAt | date : "medium" }}</span>
     <span class="mod-options">
       <i class="ion-trash-a"></i>

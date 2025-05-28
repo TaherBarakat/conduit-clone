@@ -1,0 +1,16 @@
+<form class="card comment-form">
+  <div class="card-block">
+    <textarea
+      [formControl]="commentBody"
+      class="form-control"
+      placeholder="Write a comment..."
+      rows="3"
+    ></textarea>
+  </div>
+  <div class="card-footer">
+    <img [src]="userImage" class="comment-author-img" />
+    <button class="btn btn-sm btn-primary" (click)="onPostComment()">
+      Post Comment
+    </button>
+  </div>
+</form>

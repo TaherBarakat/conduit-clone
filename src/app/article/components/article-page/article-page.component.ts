@@ -1,8 +1,12 @@
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, take } from 'rxjs';
 import { IArticle } from '../../models/article.model';
 import { comment } from '../../../comment/services/comment-data-storage.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../../../auth/auth.service';
+import { ProfileService } from '../../../profile/services/profile.service';
+import { ArticleService } from '../../services/article.service';
+import { ArticleDataStorageService } from '../../services/article-data-storage.service';
 
 @Component({
   selector: 'app-article',
@@ -10,19 +14,52 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./article-page.component.css'],
 })
 export class ArticlePageComponent implements OnInit, OnDestroy {
-  article!: IArticle;
-  comments: comment[] = [];
+  private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
+  private _auth = inject(AuthService);
+  private _articleSrv = inject(ArticleService);
+  private _articleDataStr = inject(ArticleDataStorageService);
+
   private dataSub!: Subscription;
 
-  constructor(private route: ActivatedRoute) {}
+  comments!: comment[];
+  article!: IArticle;
+  isMyArticle!: boolean;
 
   ngOnInit() {
-    this.dataSub = this.route.data.subscribe((data) => {
+    this.dataSub = this._route.data.subscribe((data) => {
       this.article = data['article'];
-      this.comments = data['comments'];
+
+      this.isMyArticle =
+        this.article.author.username === this._auth.user$.value.username;
     });
   }
 
+  onNavToAuthorProfile() {
+    this._router.navigate(['/profile', this.article.author.username]);
+  }
+  onEditArticle() {
+    this._router.navigate(['/editor', this.article.slug]);
+  }
+  onDeleteArticle() {}
+
+  onFollowUser() {
+    let { username, following } = this.article.author;
+
+    this._articleSrv
+      .followArticleAuthor(username, following)
+      .subscribe((followedProfile) => {
+        this.article.author.following = followedProfile.following;
+      });
+  }
+
+  onFavorite() {
+    let { slug, favorited } = this.article;
+    this._articleDataStr.favoriteArticle(slug, !favorited).subscribe((res) => {
+      this.article.favorited = res.article.favorited;
+      this.article.favoritesCount = res.article.favoritesCount;
+    });
+  }
   ngOnDestroy() {
     this.dataSub?.unsubscribe();
   }

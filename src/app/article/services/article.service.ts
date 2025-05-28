@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Inject, inject, Injectable } from '@angular/core';
+import { map, Observable, Subject } from 'rxjs';
 import { IArticle } from '../models/article.model';
 import {
   ArticleDataStorageService,
@@ -9,12 +9,14 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { articleForm } from '../models/articleForm.model';
 import { ThisReceiver } from '@angular/compiler';
+import { ProfileDataStorageService } from '../../profile/services/profile-data-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  private _articleDataStrSrv = inject(ArticleDataStorageService);
+  private _articleDataStr = inject(ArticleDataStorageService);
+  private _profileDataStr = inject(ProfileDataStorageService);
   private _articleParams: ArticleParams;
 
   articles$ = new Subject<IArticle[]>();
@@ -34,15 +36,13 @@ export class ArticleService {
   setArticles() {
     console.log('setArticles');
 
-    this._articleDataStrSrv
-      .getArticles(this._articleParams)
-      .subscribe((res) => {
-        this.articles$.next(res.articles);
-        this._setArticleListPaginationDeities(
-          this._articleParams,
-          res.articlesCount
-        );
-      });
+    this._articleDataStr.getArticles(this._articleParams).subscribe((res) => {
+      this.articles$.next(res.articles);
+      this._setArticleListPaginationDeities(
+        this._articleParams,
+        res.articlesCount
+      );
+    });
   }
 
   private _setArticleListPaginationDeities(
@@ -57,10 +57,10 @@ export class ArticleService {
     this.pagination$.next(pagination);
   }
 
-  articles: IArticle[] = [];
+  // articles: IArticle[] = [];
 
   getArticleBySlug(slug: string): Observable<IArticle> {
-    return this._articleDataStrSrv.getArticleBySlug(slug);
+    return this._articleDataStr.getArticleBySlug(slug);
   }
 
   submitArticleForm(articleInfo: articleForm, editMode: boolean) {
@@ -75,12 +75,16 @@ export class ArticleService {
     };
 
     const request = editMode
-      ? this._articleDataStrSrv.putArticle({ article })
-      : this._articleDataStrSrv.postArticle({ article });
+      ? this._articleDataStr.putArticle({ article })
+      : this._articleDataStr.postArticle({ article });
 
     return request;
   }
   // toggleFavorite(){
   //   this
   // }
+
+  followArticleAuthor(username: string, state: boolean) {
+    return this._profileDataStr.followProfile(username, !state);
+  }
 }

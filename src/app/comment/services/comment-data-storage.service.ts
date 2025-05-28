@@ -22,11 +22,20 @@ export class CommentDataStorageService {
       .get<{ comments: comment[] }>(
         `${environment.apiUrl}/articles/${slug}/comments`
       )
-      .pipe(map((res) => res.comments));
+      .pipe(
+        map((res) =>
+          res.comments.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        )
+      );
   }
 
   postComment(slug: string, newComment: string) {
     let reqBody = { comment: { body: newComment } };
+    console.log(reqBody);
+    console.log(slug, newComment);
     return this._httpSrv
       .post<{ comment: comment }>(
         `${environment.apiUrl}/articles/${slug}/comments`,

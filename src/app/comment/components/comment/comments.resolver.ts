@@ -9,8 +9,8 @@ import {
   CommentDataStorageService,
 } from '../../services/comment-data-storage.service';
 
-export const commentsResolver: ResolveFn<comment[]> = (route, state) => {
-  let commentStr = inject(CommentDataStorageService);
+// export const commentsResolver: ResolveFn<comment[]> = (route, state) => {
+//   // let commentStr = inject(CommentDataStorageService);
 
-  return commentStr.loadComments(route.params['article-slug']);
-};
+//   // return commentStr.loadComments(route.params['article-slug']);
+// };

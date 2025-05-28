@@ -43,10 +43,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {
-    // this.articleSubscription.unsubscribe();
-    // this.articlesCountSubscription.unsubscribe();
-  }
+  ngOnDestroy() {}
   onFollow() {
     this._profileSrv
       .followProfile(

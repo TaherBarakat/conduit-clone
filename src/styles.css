@@ -1144,3 +1144,14 @@ html {
     background: white;
   }
 }
+
+.nav-to-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #28a745; */
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+  cursor: pointer;
+  position: relative !important;
+}

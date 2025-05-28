@@ -17,6 +17,7 @@ export class ArticlesListItemComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _articleDataStr = inject(ArticleDataStorageService);
   private _articleSrv = inject(ArticleService);
+
   ngOnInit() {
     // console.log(this.article);
   }

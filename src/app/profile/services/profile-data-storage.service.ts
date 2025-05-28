@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environments';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 export type TProfile = {
   username: string;
   bio: string;
@@ -19,7 +19,7 @@ export class ProfileDataStorageService {
       .get<{ profile: TProfile }>(`${environment.apiUrl}/profiles/${username}`)
       .pipe(map((profileRes) => profileRes.profile));
   }
-  followProfile(username: string, state: boolean) {
+  followProfile(username: string, state: boolean): Observable<TProfile> {
     return state
       ? this._httpSrv
           .post<{ profile: TProfile }>(
