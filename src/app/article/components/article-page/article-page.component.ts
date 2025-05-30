@@ -1,12 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { IArticle } from '../../models/article.model';
-import { comment } from '../../../comment/services/comment-data-storage.service';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { IComment } from '../../../comment/services/comment-data-storage.service';
+import { Component, inject, OnDestroy, OnInit, Signal } from '@angular/core';
 import { AuthService } from '../../../auth/auth.service';
 import { ProfileService } from '../../../profile/services/profile.service';
 import { ArticleService } from '../../services/article.service';
 import { ArticleDataStorageService } from '../../services/article-data-storage.service';
+import { CommentService } from '../../../comment/services/comment.service';
 
 @Component({
   selector: 'app-article',
@@ -19,14 +20,16 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
   private _auth = inject(AuthService);
   private _articleSrv = inject(ArticleService);
   private _articleDataStr = inject(ArticleDataStorageService);
+  private _commentService = inject(CommentService);
 
   private dataSub!: Subscription;
 
-  comments!: comment[];
+  comments: Signal<IComment[]> = this._commentService.localComments$;
   article!: IArticle;
   isMyArticle!: boolean;
 
   ngOnInit() {
+    console.log(this.comments);
     this.dataSub = this._route.data.subscribe((data) => {
       this.article = data['article'];
 

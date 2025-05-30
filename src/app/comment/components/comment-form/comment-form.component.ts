@@ -23,6 +23,14 @@ export class CommentFormComponent {
   }
 
   onPostComment() {
-    this._commentSrv.addComment(this.articleSlug, this.commentBody.value);
+    this._commentSrv
+      .addComment(this.articleSlug, this.commentBody.value)
+      .subscribe((newComment) => {
+        this._commentSrv.localComments$.update((prevComments) => [
+          newComment,
+          ...prevComments,
+        ]);
+        this.commentBody.setValue('');
+      });
   }
 }

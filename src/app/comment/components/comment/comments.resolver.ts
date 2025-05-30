@@ -5,12 +5,14 @@ import { ArticleService } from '../../../article/services/article.service';
 import { map } from 'rxjs';
 import { ArticleDataStorageService } from '../../../article/services/article-data-storage.service';
 import {
-  comment,
+  IComment,
   CommentDataStorageService,
 } from '../../services/comment-data-storage.service';
+import { CommentService } from '../../services/comment.service';
 
-// export const commentsResolver: ResolveFn<comment[]> = (route, state) => {
-//   // let commentStr = inject(CommentDataStorageService);
+export const commentsResolver = (route, state) => {
+  // let commentStr = inject(CommentDataStorageService);
+  let commentSrv = inject(CommentService);
 
-//   // return commentStr.loadComments(route.params['article-slug']);
-// };
+  commentSrv.setLocalComments(route.params['article-slug']);
+};

@@ -4,22 +4,22 @@ import { ArticleService } from '../../article/services/article.service';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { author } from '../../article/models/author.model';
-export type comment = {
+export interface IComment {
   id: number;
   createdAt: string;
   updatedAt: string;
   body: string;
   author: author;
-};
+}
 @Injectable({
   providedIn: 'root',
 })
 export class CommentDataStorageService {
   private _httpSrv = inject(HttpClient);
 
-  loadComments(slug: string): Observable<comment[]> {
+  loadComments(slug: string): Observable<IComment[]> {
     return this._httpSrv
-      .get<{ comments: comment[] }>(
+      .get<{ comments: IComment[] }>(
         `${environment.apiUrl}/articles/${slug}/comments`
       )
       .pipe(
@@ -37,7 +37,7 @@ export class CommentDataStorageService {
     console.log(reqBody);
     console.log(slug, newComment);
     return this._httpSrv
-      .post<{ comment: comment }>(
+      .post<{ comment: IComment }>(
         `${environment.apiUrl}/articles/${slug}/comments`,
         reqBody
       )
@@ -45,7 +45,7 @@ export class CommentDataStorageService {
   }
 
   deleteComment(slug: string, commentId: number) {
-    return this._httpSrv.delete<{ comment: comment }>(
+    return this._httpSrv.delete<{ comment: IComment }>(
       `${environment.apiUrl}/articles/${slug}/comments/${commentId}`
     );
     // .pipe(map((res) => res.comment));

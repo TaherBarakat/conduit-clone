@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { comment } from '../../services/comment-data-storage.service';
+import { IComment } from '../../services/comment-data-storage.service';
 // import { comment } from '../../../article/services/article.service';
 
 @Component({
@@ -8,5 +8,5 @@ import { comment } from '../../services/comment-data-storage.service';
   styleUrl: './comment.component.css',
 })
 export class CommentComponent {
-  @Input('comment') comment: comment;
+  @Input('comment') comment: IComment;
 }

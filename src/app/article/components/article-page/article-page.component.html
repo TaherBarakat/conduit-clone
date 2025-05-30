@@ -100,7 +100,7 @@
       <div class="col-xs-12 col-md-8 offset-md-2">
         <app-comment-form />
 
-        @for (comment of comments; track comment.id) {
+        @for (comment of comments(); track comment.id) {
         <app-comment [comment]="comment" />
         }
       </div>

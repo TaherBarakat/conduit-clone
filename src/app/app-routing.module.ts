@@ -11,7 +11,7 @@ import { HomePageComponent } from './home-page/components/home-page/home-page.co
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ArticlePageComponent } from './article/components/article-page/article-page.component';
-// import { commentsResolver } from './comment/components/comment/comments.resolver';
+import { commentsResolver } from './comment/components/comment/comments.resolver';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/components/profile-page/profile.component';
 import { ArticleFormComponent } from './article/components/article-form/article-form.component';
@@ -56,6 +56,7 @@ const routes: Routes = [
     path: 'article/:article-slug',
     resolve: {
       article: resolveArticle,
+      comments: commentsResolver,
     },
   },
   {
