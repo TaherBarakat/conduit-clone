@@ -101,7 +101,7 @@
         <app-comment-form />
 
         @for (comment of comments(); track comment.id) {
-        <app-comment [comment]="comment" />
+        <app-comment [comment]="comment" [slug]="article.slug" />
         }
       </div>
     </div>

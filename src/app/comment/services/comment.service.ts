@@ -24,4 +24,12 @@ export class CommentService {
   addComment(slug: string, comment: string): Observable<IComment> {
     return this._commentDataStr.postComment(slug, comment);
   }
+
+  removeComment(slug: string, commentId: number): void {
+    this._commentDataStr.deleteComment(slug, commentId).subscribe(() => {
+      this.localComments$.update((comments) =>
+        comments.filter((c) => c.id !== commentId)
+      );
+    });
+  }
 }

@@ -19,7 +19,7 @@
     >
     <span class="date-posted">{{ comment.createdAt | date : "medium" }}</span>
     <span class="mod-options">
-      <i class="ion-trash-a"></i>
+      <i (click)="onRemoveComment()" class="ion-trash-a"></i>
     </span>
   </div>
 </div>

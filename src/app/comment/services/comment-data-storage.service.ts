@@ -45,7 +45,7 @@ export class CommentDataStorageService {
   }
 
   deleteComment(slug: string, commentId: number) {
-    return this._httpSrv.delete<{ comment: IComment }>(
+    return this._httpSrv.delete(
       `${environment.apiUrl}/articles/${slug}/comments/${commentId}`
     );
     // .pipe(map((res) => res.comment));
