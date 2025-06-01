@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { HomePageService } from '../../services/home-page.service';
+import { TageService } from '../../../shared/services/tage.service';
 import { ArticleService } from '../../../article/services/article.service';
 import { Subscription } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './tags-list.component.css',
 })
 export class TagsListComponent implements OnInit, OnDestroy {
-  private _homePageSrv = inject(HomePageService);
+  private _homePageSrv = inject(TageService);
   private _articleService = inject(ArticleService);
 
   tags: string[] = this._homePageSrv.tags;

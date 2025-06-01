@@ -6,7 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class HomePageService {
+export class TageService {
   private _httpSrv = inject(HttpClient);
   private _tags: string[] = [];
 
@@ -25,6 +25,7 @@ export class HomePageService {
         this._setTags = resData.tags;
       });
   }
+
   tagFilter?: string;
   setTagFilter(tag: string) {
     this.tagFilter = tag;

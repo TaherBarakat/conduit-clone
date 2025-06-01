@@ -10,7 +10,7 @@ import {
   ArticleDataStorageService,
   ArticleParams,
 } from '../../../article/services/article-data-storage.service';
-import { HomePageService } from '../../services/home-page.service';
+import { TageService } from '../../../shared/services/tage.service';
 import { IArticle } from '../../../article/models/article.model';
 @Component({
   selector: 'app-home-page',

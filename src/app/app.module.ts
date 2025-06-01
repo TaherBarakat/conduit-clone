@@ -58,7 +58,7 @@ import { CommentFormComponent } from './comment/components/comment-form/comment-
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule,
+    // RouterModule,
   ],
   providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent],

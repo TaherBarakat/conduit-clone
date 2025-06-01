@@ -62,7 +62,7 @@ export class ArticleDataStorageService {
     articles: IArticle[];
     articlesCount: number;
   }> {
-    console.log(params);
+    // console.log(params);
     return this._httpSrv
       .get<{
         articles: IArticle[];

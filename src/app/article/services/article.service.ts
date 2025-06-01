@@ -34,7 +34,7 @@ export class ArticleService {
   }
 
   setArticles() {
-    console.log('setArticles');
+    // console.log('setArticles');
 
     this._articleDataStr.getArticles(this._articleParams).subscribe((res) => {
       this.articles$.next(res.articles);
