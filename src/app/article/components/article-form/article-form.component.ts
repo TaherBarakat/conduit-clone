@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environments';
 import { IArticle } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
+import { TagService as TagService } from '../../../shared/services/tag.service';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -23,11 +24,14 @@ export class ArticleFormComponent implements OnInit {
   private _articleSrv = inject(ArticleService);
   private _route = inject(ActivatedRoute);
   private _httpSrv = inject(HttpClient);
+  private _tagSrv = inject(TagService);
 
   editMode: boolean = false;
   articleForm: FormGroup;
-
+  availableTags = this._tagSrv.tags$;
+  selectedTags: string[] = ['dd', 'age'];
   ngOnInit() {
+    this._tagSrv.loadTags();
     this.intForm();
   }
 
@@ -39,12 +43,13 @@ export class ArticleFormComponent implements OnInit {
     let title = new FormControl('', [Validators.required]);
     let description = new FormControl('', [Validators.required]);
     let body = new FormControl('', [Validators.required]);
-    let tags = new FormArray([]);
-    this.articleForm = new FormGroup({ title, description, body, tags });
+    let tagList = new FormControl(this.selectedTags);
+    this.articleForm = new FormGroup({ title, description, body, tagList });
   }
 
   onSubmit() {
-    // console.log(this.articleForm.value, '1');
+    console.log(this.articleForm.value);
+    // console.log(this.a);
     this._articleSrv.submitArticleForm(this.articleForm, this.editMode);
   }
 }

@@ -1,33 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, OnInit } from '@angular/core';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TageService {
+export class TagService {
   private _httpSrv = inject(HttpClient);
-  private _tags: string[] = [];
+  tags$ = signal<string[]>([]);
 
   private set _setTags(tags: string[]) {
-    this._tags.push(...tags);
-  }
-  get tags() {
-    return this._tags;
+    this.tags$.set(tags);
   }
 
   loadTags() {
-    this._tags.length = 0;
     this._httpSrv
       .get<{ tags: string[] }>(`${environment.apiUrl}/tags`)
       .subscribe((resData) => {
         this._setTags = resData.tags;
       });
-  }
-
-  tagFilter?: string;
-  setTagFilter(tag: string) {
-    this.tagFilter = tag;
   }
 }

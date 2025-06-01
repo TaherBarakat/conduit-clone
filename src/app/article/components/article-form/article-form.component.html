@@ -39,9 +39,12 @@
                 placeholder="Enter tags"
               />
               <div class="tag-list">
+                @for (tag of selectedTags; track $index) {
+
                 <span class="tag-default tag-pill">
-                  <i class="ion-close-round"></i> tag
+                  <i class="ion-close-round"></i> {{ tag }}
                 </span>
+                }
               </div>
             </fieldset>
             <button

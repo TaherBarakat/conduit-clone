@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { TageService } from '../../../shared/services/tage.service';
+import { TagService } from '../../../shared/services/tag.service';
 import { IArticle } from '../../models/article.model';
 import {
   ArticleDataStorageService,
