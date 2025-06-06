@@ -11,7 +11,11 @@ export class HeaderComponent implements OnInit {
   authenticated: boolean = false;
   userSub: Subscription;
 
+  isMenu: boolean = false;
   constructor(private authSrv: AuthService) {}
+  onToggleMenu() {
+    this.isMenu = !this.isMenu;
+  }
   ngOnInit(): void {
     this.authSrv.getLoggedInUser();
 

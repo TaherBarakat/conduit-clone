@@ -89,9 +89,19 @@ h6 {
 }
 
 .page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 2rem 0;
+  margin-top: 1rem;
 }
 
+.articles-row {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
 /* Grid Layout System */
 .row {
   display: flex;
@@ -748,6 +758,11 @@ form {
   overflow: hidden;
 }
 
+.user-info > .container {
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+}
 .profile-page .user-info::before {
   content: "";
   position: absolute;
@@ -932,6 +947,9 @@ footer .logo-font {
     padding: 0 1rem;
   }
 
+  .articles-row {
+    flex-direction: column-reverse;
+  }
   .banner h1 {
     font-size: 2.5rem;
   }
@@ -1154,4 +1172,27 @@ html {
   z-index: 9999 !important;
   cursor: pointer;
   position: relative !important;
+}
+.mobile-menu-btn {
+  height: 1rem;
+  width: 1rem;
+  all: unset;
+  cursor: pointer;
+  position: relative; /* Default position */
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  .mobile-menu-btn {
+    font-size: x-large;
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+    z-index: 10;
+  }
 }

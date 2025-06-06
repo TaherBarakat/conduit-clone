@@ -1,7 +1,12 @@
 <nav *ngIf="!authenticated" class="navbar navbar-light">
+  <button class="mobile-menu-btn" (click)="onToggleMenu()">☰</button>
   <div class="container">
     <a class="navbar-brand" routerLink="/home">conduit</a>
-    <ul class="nav navbar-nav pull-xs-right">
+
+    <ul
+      class="nav navbar-nav pull-xs-right nav-links"
+      [ngStyle]="{ display: isMenu ? 'block' : 'none' }"
+    >
       <li class="nav-item">
         <!-- Add "active" class when you're on that page" -->
         <a
@@ -35,9 +40,13 @@
 </nav>
 
 <nav *ngIf="authenticated" class="navbar navbar-light">
+  <button class="mobile-menu-btn" (click)="onToggleMenu()">☰</button>
   <div class="container">
     <a class="navbar-brand" routerLink="/home">conduit</a>
-    <ul class="nav navbar-nav pull-xs-right">
+    <ul
+      class="nav navbar-nav pull-xs-right"
+      [ngStyle]="{ display: isMenu ? 'block' : 'none' }"
+    >
       <li class="nav-item">
         <!-- Add "active" class when you're on that page" -->
         <a
