@@ -100,7 +100,7 @@ export class ArticleDataStorageService {
       title: string;
       description: string;
       body: string;
-      tags?: string[];
+      tagList?: string[];
     };
   }) {
     this._httpSrv
@@ -117,7 +117,7 @@ export class ArticleDataStorageService {
       title: string;
       description: string;
       body: string;
-      tags?: string[];
+      tagList?: string[];
     };
   }) {
     this._httpSrv

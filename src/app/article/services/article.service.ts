@@ -65,13 +65,13 @@ export class ArticleService {
 
   submitArticleForm(articleInfo: articleForm, editMode: boolean) {
     // console.log(articleInfo, editMode);
-    const { body, description, title, tags } = articleInfo.value;
+    const { body, description, title, tagList } = articleInfo.value;
 
     const article = {
       body,
       description,
       title,
-      ...(editMode ? {} : { tags }), // include tags only when not editing
+      ...(editMode ? {} : { tagList }), // include tags only when not editing
     };
 
     const request = editMode

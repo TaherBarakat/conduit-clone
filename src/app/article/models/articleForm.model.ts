@@ -4,5 +4,5 @@ export type articleForm = FormGroup<{
   title: FormControl<string>;
   description: FormControl<string>;
   body: FormControl<string>;
-  tags: FormArray;
+  tagList: FormControl<string[]>;
 }>;
