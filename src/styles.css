@@ -196,6 +196,7 @@ h6 {
   background-clip: text;
   text-decoration: none;
   transition: var(--transition-smooth);
+  position: static;
 }
 
 .navbar-brand:hover {
@@ -1178,21 +1179,30 @@ html {
   width: 1rem;
   all: unset;
   cursor: pointer;
-  position: relative; /* Default position */
 }
 
 .mobile-menu-btn {
   display: none;
 }
+.nav-links-hide {
+  display: block !important;/
+
+}
+
+
 @media only screen and (max-width: 768px) {
+  .nav-links-hide {
+    display: none !important;
+  }
+  
   .mobile-menu-btn {
     font-size: x-large;
     display: block;
     position: absolute;
     left: 15px;
-    top: 50%;
+    /* top: 50%; */
 
-    transform: translateY(-50%);
+    transform: translateY(50%);
     z-index: 10;
   }
 }

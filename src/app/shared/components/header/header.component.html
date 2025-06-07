@@ -4,8 +4,8 @@
     <a class="navbar-brand" routerLink="/home">conduit</a>
 
     <ul
-      class="nav navbar-nav pull-xs-right nav-links"
-      [ngStyle]="{ display: isMenu ? 'block' : 'none' }"
+      class="nav navbar-nav pull-xs-right"
+      [ngClass]="{ 'nav-links-hide': !isMenuActive }"
     >
       <li class="nav-item">
         <!-- Add "active" class when you're on that page" -->
@@ -45,7 +45,7 @@
     <a class="navbar-brand" routerLink="/home">conduit</a>
     <ul
       class="nav navbar-nav pull-xs-right"
-      [ngStyle]="{ display: isMenu ? 'block' : 'none' }"
+      [ngClass]="{ 'nav-links-hide': !isMenuActive }"
     >
       <li class="nav-item">
         <!-- Add "active" class when you're on that page" -->
