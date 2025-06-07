@@ -10,8 +10,14 @@
     <button
       (click)="onFavorite()"
       class="btn btn-outline-primary btn-sm pull-xs-right"
+      style="width: 20%"
     >
-      <i class="ion-heart"></i> {{ article.favoritesCount }}
+      <i
+        [ngClass]="{ 'ion-heart': article.favorited,
+        'ion-ios-heart-outline': !article.favorited,
+       }"
+      ></i>
+      {{ article.favoritesCount }}
     </button>
   </div>
   <!-- <a routerLink="/article/the-song-you" class="preview-link"> -->

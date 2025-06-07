@@ -30,6 +30,7 @@ export class ArticleService {
   setTagFilter(tag: string, state: boolean) {
     this._articleParams.tag = this._articleParams.tag === tag ? undefined : tag;
     this.tagFilter$.next(this._articleParams.tag);
+    // this._articleParams.offset = 0;
     if (state) this.setArticles();
   }
 
