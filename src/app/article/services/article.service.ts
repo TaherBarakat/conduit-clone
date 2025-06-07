@@ -1,5 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, inject, Injectable } from '@angular/core';
+import {
+  Inject,
+  inject,
+  Injectable,
+  ɵCONTAINER_HEADER_OFFSET,
+} from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { IArticle } from '../models/article.model';
 import {
@@ -30,7 +35,7 @@ export class ArticleService {
   setTagFilter(tag: string, state: boolean) {
     this._articleParams.tag = this._articleParams.tag === tag ? undefined : tag;
     this.tagFilter$.next(this._articleParams.tag);
-    // this._articleParams.offset = 0;
+    this._articleParams.offset = 0;
     if (state) this.setArticles();
   }
 
