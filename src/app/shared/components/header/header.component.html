@@ -1,9 +1,12 @@
 <nav *ngIf="!authenticated" class="navbar navbar-light">
   <button class="mobile-menu-btn" (click)="onToggleMenu()">☰</button>
   <div class="container">
-    <a class="navbar-brand" routerLink="/home">conduit</a>
+    <a (click)="onToggleMenu()" class="navbar-brand" routerLink="/home"
+      >conduit</a
+    >
 
     <ul
+      (click)="onToggleMenu()"
       class="nav navbar-nav pull-xs-right"
       [ngClass]="{ 'nav-links-hide': !isMenuActive }"
     >
@@ -44,6 +47,7 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/home">conduit</a>
     <ul
+      (click)="onToggleMenu()"
       class="nav navbar-nav pull-xs-right"
       [ngClass]="{ 'nav-links-hide': !isMenuActive }"
     >
