@@ -30,14 +30,18 @@ export class ArticleFormComponent implements OnInit {
   articleForm: FormGroup;
   availableTags = this._tagSrv.tags$;
   selectedTags: string[] = ['dd', 'age'];
+  tagInput = new FormControl('');
+  filteredTags: string[] = [];
+  showSuggestions: boolean = false;
+
   ngOnInit() {
     this._tagSrv.loadTags();
-    this.intForm();
+    this.initForm();
   }
 
-  intForm() {
+  initForm() {
     this._route.params.subscribe((params) => {
-      if (params['article-slug']) this.editMode = false;
+      if (params['article-slug']) this.editMode = true;
     });
 
     let title = new FormControl('', [Validators.required]);
@@ -49,7 +53,58 @@ export class ArticleFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.articleForm.value);
-    // console.log(this.a);
     this._articleSrv.submitArticleForm(this.articleForm, this.editMode);
+  }
+
+  onTagInputChange() {
+    const inputValue = this.tagInput.value?.toLowerCase() || '';
+    const availableTags = this.availableTags();
+
+    if (inputValue.trim()) {
+      this.filteredTags = availableTags.filter(
+        (tag) =>
+          tag.toLowerCase().includes(inputValue) &&
+          !this.selectedTags.includes(tag)
+      );
+      this.showSuggestions = this.filteredTags.length > 0;
+    } else {
+      this.showSuggestions = false;
+    }
+  }
+
+  addTagFromInput() {
+    const tag = this.tagInput.value?.trim();
+    if (tag && !this.selectedTags.includes(tag)) {
+      this.selectedTags.push(tag);
+      this.updateTagList();
+    }
+    this.resetTagInput();
+  }
+
+  addExistingTag(tag: string) {
+    if (tag && !this.selectedTags.includes(tag)) {
+      this.selectedTags.push(tag);
+      this.updateTagList();
+    }
+    this.resetTagInput();
+  }
+
+  removeTag(tag: string) {
+    this.selectedTags = this.selectedTags.filter((t) => t !== tag);
+    this.updateTagList();
+  }
+
+  private updateTagList() {
+    this.articleForm.get('tagList')?.setValue(this.selectedTags);
+  }
+
+  private resetTagInput() {
+    this.tagInput.reset();
+    this.showSuggestions = false;
+  }
+
+  getUnselectedTags(): string[] {
+    const availableTags = this.availableTags();
+    return availableTags.filter((tag) => !this.selectedTags.includes(tag));
   }
 }

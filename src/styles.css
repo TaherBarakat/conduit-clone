@@ -564,6 +564,7 @@ h6 {
 .tag-pill {
   position: relative;
   overflow: hidden;
+  font-size: small;
 }
 
 .tag-pill::before {

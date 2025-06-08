@@ -16,6 +16,7 @@
                 placeholder="Article Title"
               />
             </fieldset>
+
             <fieldset class="form-group">
               <input
                 formControlName="description"
@@ -24,6 +25,7 @@
                 placeholder="What's this article about?"
               />
             </fieldset>
+
             <fieldset class="form-group">
               <textarea
                 formControlName="body"
@@ -32,21 +34,133 @@
                 placeholder="Write your article (in markdown)"
               ></textarea>
             </fieldset>
-            <fieldset class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter tags"
-              />
-              <div class="tag-list">
-                @for (tag of selectedTags; track $index) {
-
-                <span class="tag-default tag-pill">
-                  <i class="ion-close-round"></i> {{ tag }}
+            <div
+              class="available-tags mt-3"
+              *ngIf="getUnselectedTags().length > 0"
+            >
+              <small class="text-muted"
+                ><strong>Available tags (click to add):</strong></small
+              >
+              <div class="tag-list mt-1">
+                <span
+                  class="tag-outline tag-pill"
+                  *ngFor="let tag of getUnselectedTags()"
+                  style="
+                    cursor: pointer;
+                    margin: 2px 4px 2px 0;
+                    display: inline-block;
+                    border: 1px solid #ddd;
+                    background: #f8f9fa;
+                    transition: all 0.2s;
+                  "
+                  (click)="addExistingTag(tag)"
+                  (mouseenter)="
+                    $event.target.style.backgroundColor = '#e9ecef';
+                    $event.target.style.borderColor = '#adb5bd'
+                  "
+                  (mouseleave)="
+                    $event.target.style.backgroundColor = '#f8f9fa';
+                    $event.target.style.borderColor = '#ddd'
+                  "
+                >
+                  <i
+                    class="ion-pricetag"
+                    style="margin-right: 3px; color: #5cb85c"
+                  ></i
+                  >{{ tag }}
                 </span>
-                }
               </div>
+            </div>
+            <!-- ------- -->
+            <small class="form-text text-muted mt-2">
+              <i class="ion-information-circled"></i>
+              Type to search existing tags or create new ones. Press Enter to
+              add.
+            </small>
+            <fieldset class="form-group">
+              <div class="tag-input-container" style="position: relative">
+                <input
+                  [formControl]="tagInput"
+                  (keydown.enter)="addTagFromInput(); $event.preventDefault()"
+                  (input)="onTagInputChange()"
+                  (focus)="onTagInputChange()"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tags and press Enter"
+                />
+
+                <!-- Autocomplete dropdown for existing tags -->
+                <div
+                  class="tag-suggestions"
+                  *ngIf="showSuggestions && filteredTags.length > 0"
+                  style="
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: white;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    z-index: 1000;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                  "
+                >
+                  <div
+                    *ngFor="let tag of filteredTags"
+                    class="suggestion-item"
+                    style="
+                      padding: 8px 12px;
+                      cursor: pointer;
+                      border-bottom: 1px solid #eee;
+                      transition: background-color 0.2s;
+                    "
+                    (click)="addExistingTag(tag)"
+                    (mouseenter)="
+                      $event.target.style.backgroundColor = '#f8f9fa'
+                    "
+                    (mouseleave)="$event.target.style.backgroundColor = 'white'"
+                  >
+                    <i
+                      class="ion-pricetag"
+                      style="margin-right: 5px; color: #5cb85c"
+                    ></i
+                    >{{ tag }}
+                    <small style="color: #999; margin-left: 5px"
+                      >(existing)</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Selected Tags Display -->
+              <div class="selected-tags mt-3" *ngIf="selectedTags.length > 0">
+                <small class="text-muted"
+                  ><strong>Selected tags:</strong></small
+                >
+                <div class="tag-list mt-1">
+                  <span
+                    class="tag-default tag-pill"
+                    *ngFor="let tag of selectedTags"
+                    style="margin: 2px 4px 2px 0; display: inline-block"
+                  >
+                    <i class="ion-pricetag" style="margin-right: 3px"></i
+                    >{{ tag }}
+                    <i
+                      class="ion-close-round"
+                      style="cursor: pointer; margin-left: 5px; opacity: 0.7"
+                      (click)="removeTag(tag)"
+                      (mouseenter)="$event.target.style.opacity = '1'"
+                      (mouseleave)="$event.target.style.opacity = '0.7'"
+                    ></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Available Tags Suggestions -->
             </fieldset>
+
             <button
               (click)="onSubmit()"
               class="btn btn-lg pull-xs-right btn-primary"
