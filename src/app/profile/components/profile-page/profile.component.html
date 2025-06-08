@@ -57,7 +57,12 @@
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 [routerLink]="['/profile', profile.profileDetails.username]"
-                >My Articles</a
+              >
+                {{
+                  profile.isMyProfile
+                    ? "My Articles"
+                    : profile.profileDetails.username + " Articles"
+                }}</a
               >
             </li>
           </ul>

@@ -30,6 +30,7 @@ import { ArticleFormComponent } from './article/components/article-form/article-
 import { TagsListComponent } from './home-page/components/tags-list/tags-list.component';
 import { ArticlesListComponent } from './article/components/articles-list/articles-list.component';
 import { CommentFormComponent } from './comment/components/comment-form/comment-form.component';
+import { unauthorizedInterceptor } from './auth/unauthorized.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,11 @@ import { CommentFormComponent } from './comment/components/comment-form/comment-
     AppRoutingModule,
     // RouterModule,
   ],
-  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
+  providers: [
+    provideHttpClient(
+      withInterceptors([authInterceptor, unauthorizedInterceptor])
+    ),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
