@@ -1013,7 +1013,9 @@ footer .logo-font {
     margin-bottom: 2rem;
   }
 }
-
+.btn-secondary {
+  border: #a9a9a94f solid !important;
+}
 @media (max-width: 576px) {
   .banner {
     padding: 2rem 0;

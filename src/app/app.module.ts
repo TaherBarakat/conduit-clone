@@ -31,6 +31,8 @@ import { TagsListComponent } from './home-page/components/tags-list/tags-list.co
 import { ArticlesListComponent } from './article/components/articles-list/articles-list.component';
 import { CommentFormComponent } from './comment/components/comment-form/comment-form.component';
 import { unauthorizedInterceptor } from './auth/unauthorized.interceptor';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { ErrorModalComponent } from './shared/components/modal/error-modal/error-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,17 +43,15 @@ import { unauthorizedInterceptor } from './auth/unauthorized.interceptor';
     SigninComponent,
     SignupComponent,
     ArticlePageComponent,
-    // ArticleComponent,
     CommentComponent,
     ProfileComponent,
     SettingsComponent,
-    // FavoritesComponent,
     ArticleFormComponent,
     TagsListComponent,
     ArticlesListComponent,
     CommentFormComponent,
-    // CommentComponent,
-    // ArticleViewComponent,
+    ModalComponent,
+    ErrorModalComponent,
   ],
   imports: [
     BrowserModule,

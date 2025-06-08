@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ErrorService } from './shared/services/error.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-food-app';
+
+  private _errorSrv = inject(ErrorService);
+  error = this._errorSrv.error;
+  conformMessage = this._errorSrv.error;
 }

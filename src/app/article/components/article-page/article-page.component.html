@@ -34,19 +34,24 @@
 
           <button
             (click)="onFollowUser()"
-            class="btn btn-sm btn-outline-secondary"
+            [class]="
+              'btn btn-sm ' +
+              (article.author.following ? 'btn-secondary' : 'btn-primary')
+            "
           >
-            <i
-              [ngClass]="
-                article.author.following ? 'ion-minus-round' : 'ion-plus-round'
-              "
-            ></i>
-            &nbsp; {{ article.author.username }}
+            @if(article.author.following){ Unfollow }@else { Follow }
+
+            {{ article.author.username }}
           </button>
+
           &nbsp;&nbsp;
-          <button (click)="onFavorite()" class="btn btn-sm btn-outline-primary">
-            <i class="ion-heart"></i>
-            &nbsp; Favorite Post
+          <button (click)="onFavorite()" class="btn btn-sm btn-secondary">
+            <i
+              [ngClass]="{ 'ion-heart': article.favorited,
+        'ion-ios-heart-outline': !article.favorited,
+       }"
+            ></i>
+            &nbsp;
             <span class="counter">{{ article.favoritesCount }}</span>
           </button>
           }
