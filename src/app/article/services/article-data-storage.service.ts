@@ -103,30 +103,35 @@ export class ArticleDataStorageService {
       tagList?: string[];
     };
   }) {
-    this._httpSrv
+    return this._httpSrv
       .post<{
         article: IArticle;
       }>(`${environment.apiUrl}/articles`, articleInfo)
-      .subscribe((res) => {
-        // console.log(res);
-      });
+      .pipe(map((res) => res.article));
+    // .subscribe((res) => {
+    // console.log(res);
+    // });
   }
 
-  putArticle(articleInfo: {
-    article: {
-      title: string;
-      description: string;
-      body: string;
-      tagList?: string[];
-    };
-  }) {
-    this._httpSrv
+  putArticle(
+    articleInfo: {
+      article: {
+        title: string;
+        description: string;
+        body: string;
+        tagList?: string[];
+      };
+    },
+    articlePreviousSlug: string
+  ) {
+    return this._httpSrv
       .put<{
         article: IArticle;
-      }>(`${environment.apiUrl}/articles`, articleInfo)
-      .subscribe((res) => {
-        // console.log(res);
-      });
+      }>(`${environment.apiUrl}/articles/${articlePreviousSlug}`, articleInfo)
+      .pipe(map((res) => res.article));
+    // .subscribe((res) => {
+    // console.log(res);
+    // });
   }
 
   favoriteArticle(articleSlug: string, state: boolean) {

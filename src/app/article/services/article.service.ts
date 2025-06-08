@@ -73,7 +73,11 @@ export class ArticleService {
     return this._articleDataStr.getArticleBySlug(slug);
   }
 
-  submitArticleForm(articleInfo: articleForm, editMode: boolean) {
+  submitArticleForm(
+    articleInfo: articleForm,
+    editMode: boolean,
+    articlePreviousSlug: string
+  ) {
     // console.log(articleInfo, editMode);
     const { body, description, title, tagList } = articleInfo.value;
 
@@ -81,11 +85,11 @@ export class ArticleService {
       body,
       description,
       title,
-      ...(editMode ? {} : { tagList }), // include tags only when not editing
+      tagList,
     };
 
     const request = editMode
-      ? this._articleDataStr.putArticle({ article })
+      ? this._articleDataStr.putArticle({ article }, articlePreviousSlug)
       : this._articleDataStr.postArticle({ article });
 
     return request;

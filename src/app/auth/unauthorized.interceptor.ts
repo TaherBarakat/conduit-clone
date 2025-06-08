@@ -1,4 +1,4 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
@@ -13,11 +13,23 @@ export const unauthorizedInterceptor: HttpInterceptorFn = (req, next) => {
   // return next(req);
   return next(req).pipe(
     // tap((req) => console.log('interrrrrrrr')),
-    catchError((error) => {
+    catchError((error: HttpErrorResponse) => {
+      // console.log(error, 'itercepttttttt');
+
       if (error.status === 401) {
         console.warn('401 Unauthorized - Redirecting to login');
         router.navigate(['auth/signin']);
-      } else {
+      }
+      // else if (error.status === 422) {
+      //   const errorsObj = error.error?.errors;
+      //   let errorText: string = '';
+      //   for (const error in errorsObj) {
+      //     errorText += error + ': ' + errorsObj[error].join(',');
+      //   }
+
+      //   _errorSrv.showError(errorText);
+      // }
+      else {
         _errorSrv.showError(error.message);
       }
 

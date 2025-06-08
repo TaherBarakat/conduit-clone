@@ -8,11 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
 import { IArticle } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
 import { TagService as TagService } from '../../../shared/services/tag.service';
+import { Location } from '@angular/common';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -25,35 +26,62 @@ export class ArticleFormComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _httpSrv = inject(HttpClient);
   private _tagSrv = inject(TagService);
+  private _router = inject(Router);
 
   editMode: boolean = false;
   articleForm: FormGroup;
   availableTags = this._tagSrv.tags$;
-  selectedTags: string[] = ['dd', 'age'];
+  selectedTags: string[] = [];
   tagInput = new FormControl('');
   filteredTags: string[] = [];
   showSuggestions: boolean = false;
 
+  editedArticleSlug?: string;
   ngOnInit() {
     this._tagSrv.loadTags();
     this.initForm();
   }
 
   initForm() {
-    this._route.params.subscribe((params) => {
-      if (params['article-slug']) this.editMode = true;
-    });
-
     let title = new FormControl('', [Validators.required]);
     let description = new FormControl('', [Validators.required]);
     let body = new FormControl('', [Validators.required]);
     let tagList = new FormControl(this.selectedTags);
     this.articleForm = new FormGroup({ title, description, body, tagList });
+
+    this._route.params.subscribe((params) => {
+      // console.log(params);
+      this.editedArticleSlug = params['articleSlug'];
+      if (this.editedArticleSlug) {
+        this.editMode = true;
+
+        this._articleSrv
+          .getArticleBySlug(this.editedArticleSlug)
+          .subscribe((loadedArticle) => {
+            console.log(loadedArticle);
+
+            this.articleForm.patchValue({
+              title: loadedArticle.title,
+              description: loadedArticle.description,
+              body: loadedArticle.body,
+              tagList: loadedArticle.tagList,
+            });
+            this.selectedTags = [...loadedArticle.tagList];
+          });
+      }
+    });
   }
 
   onSubmit() {
-    console.log(this.articleForm.value);
-    this._articleSrv.submitArticleForm(this.articleForm, this.editMode);
+    this._articleSrv
+      .submitArticleForm(
+        this.articleForm,
+        this.editMode,
+        this.editedArticleSlug
+      )
+      .subscribe((newArticle) => {
+        this._router.navigate(['/article', newArticle.slug]);
+      });
   }
 
   onTagInputChange() {
