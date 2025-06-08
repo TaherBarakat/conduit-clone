@@ -1,6 +1,7 @@
 dialog {
+  font-size: 3rem;
   min-width: 30rem;
-  padding: 0;
+  padding: 2rem 3rem;
   z-index: 2;
   background: #d5c7bc;
   border-radius: 8px;

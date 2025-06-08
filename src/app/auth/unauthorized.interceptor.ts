@@ -3,12 +3,12 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { ErrorService } from '../shared/services/error.service';
+import { ModalService } from '../shared/services/modal.service';
 
 export const unauthorizedInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const _auth = inject(AuthService);
-  const _errorSrv = inject(ErrorService);
+  const _errorSrv = inject(ModalService);
 
   // return next(req);
   return next(req).pipe(

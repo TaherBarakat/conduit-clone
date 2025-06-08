@@ -1,4 +1,17 @@
 <app-modal>
+  @if (isConfMsg()) {
+
+  <div>
+    <h2></h2>
+    <p>{{ message() }}</p>
+
+    <div class="confirmation-actions">
+      <button class="button" (click)="onCancel()">cancel</button>
+      <button class="button" (click)="onConfirm()">Okay</button>
+    </div>
+  </div>
+
+  }@else {
   <div class="error">
     <h2>{{ title() }}</h2>
     <p>{{ message() }}</p>
@@ -7,4 +20,6 @@
       <button class="button" (click)="onClearError()">Okay</button>
     </div>
   </div>
+
+  }
 </app-modal>

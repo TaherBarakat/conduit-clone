@@ -15,6 +15,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { articleForm } from '../models/articleForm.model';
 import { ThisReceiver } from '@angular/compiler';
 import { ProfileDataStorageService } from '../../profile/services/profile-data-storage.service';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { ModalService } from '../../shared/services/modal.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +27,7 @@ export class ArticleService {
   private _articleDataStr = inject(ArticleDataStorageService);
   private _profileDataStr = inject(ProfileDataStorageService);
   private _articleParams: ArticleParams;
-
+  private;
   articles$ = new Subject<IArticle[]>();
   pagination$ = new Subject<number[]>();
   tagFilter$: Subject<string> = new Subject();
@@ -92,5 +96,18 @@ export class ArticleService {
 
   followArticleAuthor(username: string, state: boolean) {
     return this._profileDataStr.followProfile(username, !state);
+  }
+  private _modalSrv = inject(ModalService);
+  private _location = inject(Location);
+
+  removeArticle(articleSlug: string) {
+    this._modalSrv.showConformMessage(
+      'you sure you want to delete  the current article?'
+    );
+
+    this._modalSrv.setFunctionality(() => {
+      this._articleDataStr.deleteArticle(articleSlug);
+      this._location.back(); // 🔙 Go back one step in history
+    });
   }
 }

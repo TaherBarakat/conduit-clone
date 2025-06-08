@@ -5,12 +5,16 @@ import {
 } from './comment-data-storage.service';
 import { IArticle } from '../../article/models/article.model';
 import { Observable } from 'rxjs';
+import { ModalService } from '../../shared/services/modal.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentService {
   private _commentDataStr = inject(CommentDataStorageService);
+  private _modalSrv = inject(ModalService);
 
   localComments$ = signal<IComment[]>([]);
 
@@ -26,10 +30,16 @@ export class CommentService {
   }
 
   removeComment(slug: string, commentId: number): void {
-    this._commentDataStr.deleteComment(slug, commentId).subscribe(() => {
-      this.localComments$.update((comments) =>
-        comments.filter((c) => c.id !== commentId)
-      );
+    this._modalSrv.showConformMessage(
+      'you sure you want to delete this comment?'
+    );
+
+    this._modalSrv.setFunctionality(() => {
+      this._commentDataStr.deleteComment(slug, commentId).subscribe(() => {
+        this.localComments$.update((comments) =>
+          comments.filter((c) => c.id !== commentId)
+        );
+      });
     });
   }
 }

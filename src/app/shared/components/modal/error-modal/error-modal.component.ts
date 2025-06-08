@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { ErrorService } from '../../../services/error.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-error-modal',
@@ -7,10 +7,21 @@ import { ErrorService } from '../../../services/error.service';
   styleUrl: './error-modal.component.css',
 })
 export class ErrorModalComponent {
-  title = input<string>();
+  title? = input<string>();
   message = input<string>();
-  private errorService = inject(ErrorService);
+  // isConfirmMessage? = input<boolean>(false);
 
+  private errorService = inject(ModalService);
+  private _modal = inject(ModalService);
+  isConfMsg = this._modal.conformMessage;
+  onCancel() {
+    this.errorService.clearConformMessage();
+  }
+
+  onConfirm() {
+    this.errorService.clearConformMessage();
+    this.errorService.func();
+  }
   onClearError() {
     this.errorService.clearError();
   }

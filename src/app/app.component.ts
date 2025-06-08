@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ErrorService } from './shared/services/error.service';
+import { ModalService } from './shared/services/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { ErrorService } from './shared/services/error.service';
 export class AppComponent {
   title = 'ng-food-app';
 
-  private _errorSrv = inject(ErrorService);
+  private _errorSrv = inject(ModalService);
   error = this._errorSrv.error;
-  conformMessage = this._errorSrv.error;
+  conformMessage = this._errorSrv.conformMessage;
 }

@@ -1,7 +1,10 @@
-@if (error()|| conformMessage()) {
+@if (error() ) {
 <app-error-modal [message]="error()" title="error" />
+} @if (conformMessage()) {
+<app-error-modal [message]="conformMessage()" />
 }
 <app-header />
+
 <router-outlet />
 <!-- <app-home-page /> -->
 

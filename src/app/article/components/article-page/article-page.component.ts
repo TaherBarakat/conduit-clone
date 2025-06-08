@@ -44,7 +44,9 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
   onEditArticle() {
     this._router.navigate(['/editor', this.article.slug]);
   }
-  onDeleteArticle() {}
+  onDeleteArticle() {
+    this._articleSrv.removeArticle(this.article.slug);
+  }
 
   onFollowUser() {
     let { username, following } = this.article.author;
