@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   private _profileSrv = inject(ProfileService);
 
   profile!: {
-    profileDetails: TProfile;
+    profileDetails?: TProfile;
     isMyProfile: boolean;
   };
 

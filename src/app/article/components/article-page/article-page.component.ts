@@ -4,7 +4,7 @@ import { IArticle } from '../../models/article.model';
 import { IComment } from '../../../comment/services/comment-data-storage.service';
 import { Component, inject, OnDestroy, OnInit, Signal } from '@angular/core';
 import { AuthService } from '../../../auth/auth.service';
-import { ProfileService } from '../../../profile/services/profile.service';
+// import { ProfileService } from '../../../profile/services/profile.service';
 import { ArticleService } from '../../services/article.service';
 import { ArticleDataStorageService } from '../../services/article-data-storage.service';
 import { CommentService } from '../../../comment/services/comment.service';
