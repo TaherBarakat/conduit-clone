@@ -29,12 +29,12 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
   isMyArticle!: boolean;
 
   ngOnInit() {
-    console.log(this.comments);
+    // console.log(this.comments);
     this.dataSub = this._route.data.subscribe((data) => {
       this.article = data['article'];
 
       this.isMyArticle =
-        this.article.author.username === this._auth.user$.value.username;
+        this.article.author?.username === this._auth.user$.value?.username;
     });
   }
 

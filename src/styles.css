@@ -1231,3 +1231,14 @@ html {
     font-size: 0.9rem;
   }
 }
+
+.article-page-meta {
+  flex-direction: column !important;
+}
+
+.article-page-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}

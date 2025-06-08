@@ -25,7 +25,7 @@ const API_ENDPOINTS: EndpointConfig[] = [
   { method: 'GET', matcher: '/articles/feed', auth: 'required' },
   { method: 'GET', matcher: '/articles', auth: 'optional' },
   { method: 'POST', matcher: '/articles', auth: 'required' },
-  { method: 'GET', matcher: '/articles/:slug', auth: 'none' },
+  { method: 'GET', matcher: '/articles/:slug', auth: 'optional' },
   { method: 'PUT', matcher: '/articles/:slug', auth: 'required' },
   { method: 'DELETE', matcher: '/articles/:slug', auth: 'required' },
 

@@ -2,8 +2,7 @@
   <!-- header                        ---------------------------------------------------- -->
   <div class="banner">
     <div class="container">
-      <h1>{{ article.title }}</h1>
-      <div class="article-meta">
+      <div class="article-meta article-page-meta">
         <div>
           <div (click)="onNavToAuthorProfile()" class="nav-to-profile">
             <a><img [src]="article.author.image" /></a>
@@ -13,42 +12,45 @@
             </div>
           </div>
         </div>
-        <!-- actions ------------------------------- -->
-        @if(isMyArticle){
-        <button
-          (click)="onEditArticle()"
-          class="btn btn-sm btn-outline-secondary"
-        >
-          <i class="ion-edit"></i> Edit Article
-        </button>
-        <button
-          (click)="onDeleteArticle()"
-          class="btn btn-sm btn-outline-danger"
-        >
-          <i class="ion-trash-a"></i> Delete Article
-        </button>
-        <i class="ion-heart"></i> {{ article.favoritesCount }}
+        <h1>{{ article.title }}</h1>
+        <div class="article-page-actions">
+          <!-- actions ------------------------------- -->
+          @if(isMyArticle){
+          <button
+            (click)="onEditArticle()"
+            class="btn btn-sm btn-outline-secondary"
+          >
+            <i class="ion-edit"></i> Edit Article
+          </button>
+          <button
+            (click)="onDeleteArticle()"
+            class="btn btn-sm btn-outline-danger"
+          >
+            <i class="ion-trash-a"></i> Delete Article
+          </button>
+          <i class="ion-heart"></i> {{ article.favoritesCount }}
 
-        }@else {
+          }@else {
 
-        <button
-          (click)="onFollowUser()"
-          class="btn btn-sm btn-outline-secondary"
-        >
-          <i
-            [ngClass]="
-              article.author.following ? 'ion-minus-round' : 'ion-plus-round'
-            "
-          ></i>
-          &nbsp; {{ article.author.username }}
-        </button>
-        &nbsp;&nbsp;
-        <button (click)="onFavorite()" class="btn btn-sm btn-outline-primary">
-          <i class="ion-heart"></i>
-          &nbsp; Favorite Post
-          <span class="counter">{{ article.favoritesCount }}</span>
-        </button>
-        }
+          <button
+            (click)="onFollowUser()"
+            class="btn btn-sm btn-outline-secondary"
+          >
+            <i
+              [ngClass]="
+                article.author.following ? 'ion-minus-round' : 'ion-plus-round'
+              "
+            ></i>
+            &nbsp; {{ article.author.username }}
+          </button>
+          &nbsp;&nbsp;
+          <button (click)="onFavorite()" class="btn btn-sm btn-outline-primary">
+            <i class="ion-heart"></i>
+            &nbsp; Favorite Post
+            <span class="counter">{{ article.favoritesCount }}</span>
+          </button>
+          }
+        </div>
       </div>
     </div>
   </div>

@@ -16,7 +16,7 @@ export class CommentService {
 
   setLocalComments(slug: string) {
     this._commentDataStr.loadComments(slug).subscribe((loadedArticles) => {
-      console.log(loadedArticles, 'fromcommentreq');
+      // console.log(loadedArticles, 'fromcommentreq');
 
       this.localComments$.set(loadedArticles);
     });

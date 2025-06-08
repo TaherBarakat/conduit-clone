@@ -18,7 +18,7 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMyComment =
-      this._auth.user$.value.username === this.comment.author.username;
+      this._auth.user$.value?.username === this.comment.author.username;
   }
   onRemoveComment() {
     this._commentSrv.removeComment(this.slug, this.comment.id);

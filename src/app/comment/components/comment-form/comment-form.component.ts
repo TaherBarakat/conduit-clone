@@ -15,10 +15,12 @@ export class CommentFormComponent {
   private _route = inject(ActivatedRoute);
 
   articleSlug!: string;
-  userImage = this._auth.user$.value.image;
+  userImage = this._auth.user$.value?.image;
+  // currentUser = this._auth.user$.value;
   commentBody = new FormControl('', Validators.required);
-
+  isLoggedIn = this._auth.user$.value?.username && true;
   ngOnInit() {
+    // console.log(this.currentUser, 'ddddddddddddddd');
     this.articleSlug = this._route.snapshot.params['article-slug'];
   }
 
