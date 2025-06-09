@@ -14,7 +14,7 @@ import { IArticle } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
 import { TagService as TagService } from '../../../shared/services/tag.service';
 import { Location } from '@angular/common';
-import { catchError, throwError } from 'rxjs';
+import { catchError, Subscriber, throwError } from 'rxjs';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -41,6 +41,11 @@ export class ArticleFormComponent implements OnInit {
   ngOnInit() {
     this._tagSrv.loadTags();
     this.initForm();
+
+    this.articleForm.valueChanges.subscribe((x) => {
+      console.log('change');
+      this.errors = [];
+    });
   }
 
   initForm() {
@@ -136,7 +141,7 @@ export class ArticleFormComponent implements OnInit {
         catchError((error: HttpErrorResponse) => {
           let errorsList = [];
           Object.keys(error.error.errors).map((key) => {
-            errorsList.push(`${key} :${error.error.errors[key].join(', ')}`);
+            errorsList.push(`${key}: ${error.error.errors[key].join(', ')}`);
             this.errors = [...errorsList];
           });
           return throwError(() => error);

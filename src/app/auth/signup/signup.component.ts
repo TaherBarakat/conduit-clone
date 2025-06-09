@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -7,10 +7,13 @@ import { AuthService } from '../auth.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
-export class SignupComponent {
-  constructor(private authSrb: AuthService) {}
-
+export class SignupComponent implements OnInit {
+  constructor(private authSrv: AuthService) {}
+  errors = [];
+  ngOnInit(): void {
+    this.authSrv.errors.subscribe((e) => (this.errors = e));
+  }
   onSubmit(form: NgForm) {
-    this.authSrb.signup(form.value);
+    this.authSrv.signup(form.value);
   }
 }

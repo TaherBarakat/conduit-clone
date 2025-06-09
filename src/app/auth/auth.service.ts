@@ -1,6 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Subject,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LocalizedString } from '@angular/compiler';
 import { Router } from '@angular/router';
@@ -50,23 +57,45 @@ export class AuthService {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  // errorsList: string[] = [];/
+  errors = new Subject<string[]>();
+  handleErrors(error) {
+    let errorsList = [];
+    Object.keys(error.error.errors).map((key) => {
+      errorsList.push(`${key}: ${error.error.errors[key].join(', ')}`);
+      this.errors.next(errorsList);
+    });
+  }
   signup(formData) {
-    this._httpSrv
+    return this._httpSrv
       .post<signupResponse>(`${environment.apiUrl}/users`, {
         user: { ...formData },
       })
-      .pipe(map((resData) => resData.user))
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.handleErrors(error);
+          return throwError(() => error);
+        }),
+
+        map((resData) => resData.user)
+      )
       .subscribe((user) => {
         this.setUser(user);
       });
   }
-
   signin(formData) {
-    this._httpSrv
+    return this._httpSrv
       .post<signupResponse>(`${environment.apiUrl}/users/login`, {
         user: { ...formData },
       })
-      .pipe(map((resData) => resData.user))
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.handleErrors(error);
+          return throwError(() => error);
+        }),
+
+        map((resData) => resData.user)
+      )
       .subscribe((user) => {
         this.setUser(user);
       });

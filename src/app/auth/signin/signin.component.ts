@@ -9,12 +9,11 @@ import { AuthService } from '../auth.service';
 })
 export class SigninComponent implements OnInit {
   constructor(private authSrv: AuthService) {}
-
+  errors = [];
+  ngOnInit(): void {
+    this.authSrv.errors.subscribe((e) => (this.errors = e));
+  }
   onSubmit(form: NgForm) {
     this.authSrv.signin(form.value);
-  }
-
-  ngOnInit() {
-    // this.authSrv.getLoggedInUser();
   }
 }

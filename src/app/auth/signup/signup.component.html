@@ -6,36 +6,67 @@
         <p class="text-xs-center">
           <a routerLink="/auth/signin">Have an account?</a>
         </p>
-
-        <ul class="error-messages">
-          <li>That email is already taken</li>
+        <ul
+          class="error-messages"
+          *ngIf="(!form.pristine && form.invalid) || errors.length > 0"
+        >
+          @for (error of errors; track $index) {
+          <li>{{ error }}</li>
+          }
+          <li *ngIf="username?.invalid && username?.touched">
+            <span *ngIf="username?.errors?.['required']"
+              >Username is required</span
+            >
+            <span *ngIf="username?.errors?.['minlength']"
+              >Username must be at least 5 characters</span
+            >
+            <span *ngIf="username?.errors?.['email']"
+              >Username must be a valid email format</span
+            >
+          </li>
+          <li *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">Email is required</span>
+            <span *ngIf="email?.errors?.['email']"
+              >Please enter a valid email address</span
+            >
+          </li>
+          <li *ngIf="password?.invalid && password?.touched">
+            <span *ngIf="password?.errors?.['required']"
+              >Password is required</span
+            >
+            <span *ngIf="password?.errors?.['minlength']"
+              >Password must be at least 6 characters</span
+            >
+          </li>
         </ul>
 
         <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-          <!-- <form> -->
           <fieldset class="form-group">
             <input
               ngModel
               required
-              email
               minlength="5"
               class="form-control form-control-lg"
               type="text"
               placeholder="Username"
               name="username"
+              #username="ngModel"
             />
           </fieldset>
+
           <fieldset class="form-group">
             <input
               ngModel
               required
               email
               class="form-control form-control-lg"
-              type="text"
+              type="email"
               placeholder="Email"
               name="email"
+              #email="ngModel"
             />
           </fieldset>
+
           <fieldset class="form-group">
             <input
               ngModel
@@ -45,9 +76,17 @@
               type="password"
               placeholder="Password"
               name="password"
+              #password="ngModel"
             />
           </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right">Sign up</button>
+
+          <button
+            class="btn btn-lg btn-primary pull-xs-right"
+            [disabled]="form.invalid"
+            type="submit"
+          >
+            Sign up
+          </button>
         </form>
       </div>
     </div>
