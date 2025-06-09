@@ -2,9 +2,12 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 offset-md-1 col-xs-12">
+        @for (error of errors; track $index) {
+
         <ul class="error-messages">
-          <li>That title is required</li>
+          <li>{{ error }}</li>
         </ul>
+        }
 
         <form [formGroup]="articleForm">
           <fieldset>

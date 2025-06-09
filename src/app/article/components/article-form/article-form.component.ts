@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -14,6 +14,7 @@ import { IArticle } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
 import { TagService as TagService } from '../../../shared/services/tag.service';
 import { Location } from '@angular/common';
+import { catchError, throwError } from 'rxjs';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -72,18 +73,6 @@ export class ArticleFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    this._articleSrv
-      .submitArticleForm(
-        this.articleForm,
-        this.editMode,
-        this.editedArticleSlug
-      )
-      .subscribe((newArticle) => {
-        this._router.navigate(['/article', newArticle.slug]);
-      });
-  }
-
   onTagInputChange() {
     const inputValue = this.tagInput.value?.toLowerCase() || '';
     const availableTags = this.availableTags();
@@ -134,5 +123,27 @@ export class ArticleFormComponent implements OnInit {
   getUnselectedTags(): string[] {
     const availableTags = this.availableTags();
     return availableTags.filter((tag) => !this.selectedTags.includes(tag));
+  }
+  errors: string[] = [];
+  onSubmit() {
+    this._articleSrv
+      .submitArticleForm(
+        this.articleForm,
+        this.editMode,
+        this.editedArticleSlug
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorsList = [];
+          Object.keys(error.error.errors).map((key) => {
+            errorsList.push(`${key} :${error.error.errors[key].join(', ')}`);
+            this.errors = [...errorsList];
+          });
+          return throwError(() => error);
+        })
+      )
+      .subscribe((newArticle) => {
+        this._router.navigate(['/article', newArticle.slug]);
+      });
   }
 }
