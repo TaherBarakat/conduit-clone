@@ -1,6 +1,12 @@
 @if (isLoggedIn) {
 
 <form class="card comment-form">
+  @if (error) {
+
+  <ul class="error-messages">
+    <li>{{ error | json }}</li>
+  </ul>
+  }
   <div class="card-block">
     <textarea
       [formControl]="commentBody"

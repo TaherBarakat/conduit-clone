@@ -18,6 +18,7 @@ export class SettingsService {
     }>
   ) {
     this._authSrv.user$.subscribe((currentUerInfo: user) => {
+      console.log(currentUerInfo, 'current');
       form.patchValue({ ...currentUerInfo });
     });
   }

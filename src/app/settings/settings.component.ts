@@ -16,8 +16,11 @@ export class SettingsComponent implements OnInit {
   constructor() {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl(''),
-      username: new FormControl(''),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      username: new FormControl('', [Validators.required]),
       bio: new FormControl(''),
       image: new FormControl(''),
     });
@@ -31,6 +34,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.form.invalid) return;
     let formValues = this.form.value;
     let updatedUser = {
       user: {
@@ -51,5 +55,11 @@ export class SettingsComponent implements OnInit {
     };
 
     this._authSrv.updateUserInfo(updatedUser).subscribe(obs);
+  }
+
+  get formInvalid() {
+    console.log(this.form, 'touched');
+
+    return this.form.touched && this.form.invalid;
   }
 }

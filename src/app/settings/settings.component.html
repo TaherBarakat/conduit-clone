@@ -4,8 +4,22 @@
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">Your Settings</h1>
 
-        <ul class="error-messages">
-          <li>That name is required</li>
+        <ul class="error-messages" *ngIf="form.invalid && form.touched">
+          <li *ngIf="form.controls.username.invalid">
+            That username is required
+          </li>
+          <li *ngIf="form.controls.email.errors?.['required']">
+            Email is required
+          </li>
+          <li *ngIf="form.controls.email.errors?.['email']">
+            Email format is invalid
+          </li>
+          <li *ngIf="form.controls.password.errors?.['required']">
+            Password is required
+          </li>
+          <li *ngIf="form.controls.password.errors?.['minlength']">
+            Password must be at least 6 characters
+          </li>
         </ul>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">

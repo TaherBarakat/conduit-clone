@@ -29,9 +29,9 @@ export const unauthorizedInterceptor: HttpInterceptorFn = (req, next) => {
 
       //   _errorSrv.showError(errorText);
       // }
-      else {
-        _errorSrv.showError(error.message);
-      }
+      // else {
+      // _errorSrv.showError(error.message);
+      // }
 
       return throwError(() => error);
     })

@@ -1,9 +1,4 @@
 <div class="card">
-  <div class="card-block">
-    <p class="card-text">
-      {{ comment.body }}
-    </p>
-  </div>
   <div class="card-footer">
     <a
       [routerLink]="['/profiles', comment.author.username]"
@@ -24,5 +19,10 @@
       <i (click)="onRemoveComment()" class="ion-trash-a"></i>
     </span>
     }
+  </div>
+  <div class="card-block">
+    <p class="card-text">
+      {{ comment.body }}
+    </p>
   </div>
 </div>
